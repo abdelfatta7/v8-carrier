@@ -1,0 +1,11 @@
+# RPLIDAR C1 through sllidar_ros2 (sllidar_node).
+sllidar_node:
+  ros__parameters:
+    channel_type: serial
+    serial_port: /dev/ttyUSB0
+    serial_baudrate: 460800     # the C1 runs at 460800 (A1/A2 use 115200/256000)
+    frame_id: laser
+    inverted: false
+    angle_compensate: true
+    scan_mode: Standard
+    scan_frequency: 10.0

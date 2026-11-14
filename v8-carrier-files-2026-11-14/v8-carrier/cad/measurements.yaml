@@ -1,0 +1,40 @@
+# Stage 0 measurements of the Dyson V8 Cyclone (SV55) handheld.
+# Every value is null until measured. Units: mm, g, N, V.
+# The collar, cradle rails and cheeks, rear latch and servo mast are blocked
+# until nose_diameter, nose_length, body_outline, battery_footprint and
+# power_button are filled in. Fill from the measurement sheet
+# (https://claude.ai/artifact/JotV8NvAwCAsjALsUysuXE) or the item 1 thread
+# in the build manual.
+nose:
+  outer_diameter: null      # inlet nose, outer diameter
+  length: null              # from the body face to the tip
+  catch_shape: null         # text: shape of the wand catch on the nose
+  catch_position: null      # distance from the tip
+inlet_contacts:
+  spacing: null             # centre to centre
+  position_from_tip: null
+  voltage_running: null
+  dead_when_off: null       # true / false
+body_outline:
+  length: null              # nose tip to rear of the body, no tools fitted
+  width: null
+  height: null
+  bin_diameter: null
+  cyclone_diameter: null
+  nose_axis_height_above_battery_base: null
+battery:
+  footprint_length: null
+  footprint_width: null
+  height: null
+  charge_socket_position: null   # text or x/y from a stated corner
+power_button:
+  distance_from_rear: null
+  diameter: null
+  travel: null
+  press_force: null         # N, roughly
+  # One push button cycles soft (1st press), hard (2nd), off (3rd). Decided 2026-11-10.
+weight_handheld_with_battery: null   # g
+startup_power_mode: null             # mode after off and on again
+sound_levels:                        # phone spectrum app readings, per mode
+  soft: null
+  hard: null

@@ -1,0 +1,269 @@
+# Design parameters for the V8 carrier robot. Decided values come from the build
+# manual (https://claude.ai/artifact/Vc65oKqf4N8fkRTHT9aa97) and the owner's
+# answers of 2026-11-10. Provisional values are marked and will be replaced when
+# cad/measurements.yaml is filled. Units: mm, kg.
+
+printer:
+  bed_x: 256
+  bed_y: 256
+  bed_z: 256
+  split_margin: 4          # keep every printed piece this far inside the bed
+
+body:
+  length: 420              # concept, nose tip to rear
+  width: 280               # DECIDED 2026-11-10: 280 mm; nose and tray print as two bolted halves
+  height: 230              # concept
+  split_axis: centreline   # left/right halves, bolted, with locating pins
+  wall: 3.0
+  floor: 4.0
+
+slot:                      # the opening between the pods that holds the vacuum
+  width: 150               # PROVISIONAL: replace from measurements.body_outline.width + clearance
+  clearance_each_side: 3
+
+pods:                      # two side pods with lids, one each side of the slot
+  width: 62                # (280 - 150 - 2*3) / 2
+  lid_thickness: 3
+  left_pod: battery        # 4S pack, fuse, main switch, charge socket, INA226, two buck converters
+  right_pod: electronics   # Pi 5 + active cooler, ESP32-S3 DevKitC-1, three DRV8871
+  # --- added 2026-11-10 (side_pods.py) ---
+  length: 245              # one piece per pod (fits the bed); pods start at the tray's nose rim and stop 70 mm short of the rear
+  height: 75               # box outer height without the lid; interior clears a 69 mm ESP32-S3 board standing on end
+  wheel_box_wall: 3        # internal partition walls either side of the drive motor well
+  wheel_box_clearance: 3   # radial clearance around the motor body in the well, walls and bracket window
+  pi_recess: 1.0           # the 56 mm Pi 5 equals the pod interior width; both walls are recessed this much over the Pi's length
+  standoff: {od: 7, height: 6, hole: 2.6}    # M2.5 self-tap standoffs for the Pi; M3 insert standoffs elsewhere
+  module_hole_inset: 3     # CONFIRM: generic breakout boards (INA226, DRV8871, bucks) assumed to have corner holes 3 mm in
+  esp_rail: {gap: 1.8, depth: 2, height: 50, rib: 4.5}   # vertical grooves the ESP32-S3 DevKitC-1 slides into (on end, USB up); 2.5 mm behind each groove
+  vent_slot: {width: 2.5, length: 30, pitch: 7}
+  corner_column: 8         # square column in each corner (and beside each wheel-box partition on the outer wall) carrying a lid insert
+  panel_z: 55              # rocker switch cutout and charge socket height in the battery pod's rear end wall
+  battery_layout:          # left pod; X ranges are robot-frame, Y offsets are from the pod's inner wall face
+    battery: {x: [-60, -140], y_offset: 9}       # 4S pack on the floor of the rear compartment, zip-tie slots either side (outer slot stays 1.75 mm off the wall)
+    rocker_switch_offset: 22
+    charge_socket_offset: 42
+    lid_boards:            # hang from the lid underside on M3 insert standoffs (over the battery, which is 40 mm tall)
+      fuse_holder: {x: [-30, -70], y_offset: 14}
+      buck_5v5a: {x: [-75, -125], y_offset: 14}
+      ina226: {x: [-130, -155], y_offset: 14}
+  electronics_layout:      # right pod, designed in the left frame and mirrored
+    pi5: {x: [-64, -149], y_offset: 2.5}         # rear compartment; the walls are recessed pods.pi_recess over this span
+    drv8871_rear: {x: [-153, -179], y_offsets: [12, 36]}   # two drivers side by side behind the Pi
+    drv8871_front: {x: [-30, -56], y_offset: 20}  # third driver just behind the wheel box on the inner side, beside the pass-through
+    esp32: {x0: -56.9, y_offset: 45}             # board's rear edge X and groove centre offset from the inner wall (board stands against the outer wall, behind the wheel box)
+    vent_x: [-70, -140]                          # vent slots stay inside the Pi-recess span, clear of its step
+    lid_usb_slot: [26, 10]                       # slot in the lid over the ESP32's USB end (board is 25.4 wide; keeps 4 mm to the corner lid bolt)
+
+wheels:
+  diameter: 80             # DECIDED 2026-11-10: 80 mm on sprung mounts
+  width: 25
+  tyre_thickness: 5        # TPU tyre over a PETG hub
+  track_width: 333         # DERIVED 2026-11-10: body.width + 2*(bracket + arm_gap + arm + hub_gap + width/2); wheels run outside the pods because the 60 mm JGB37 fills the pod width (build_all warns if this disagrees with wheel_module)
+  axle_from_front: 173     # PROVISIONAL default the owner may move. Was 190; set to 173 on 2026-11-10 (coordinator) because the checker found the unloaded centre of mass 6.5 mm ahead of the axle at 190 (carrier tipped onto its nose with the vacuum removed). Body-fixed features below are given in axle coordinates and were shifted with it.
+  suspension_travel: 10
+  spring_od: 10            # compression spring assortment
+  pivot_bearing: {od: 16, id: 5, width: 5}   # 625ZZ
+
+motors:
+  drive:
+    model: JGB37-520
+    diameter: 37
+    body_length: 60        # including the gearbox, excluding the shaft
+    shaft_diameter: 6      # D-shaft
+    shaft_length: 15
+    mount_holes: {pattern_dia: 31, count: 6, thread: M3}
+  brush:
+    model: JGA25-370
+    diameter: 25
+    body_length: 55
+    shaft_diameter: 4
+
+caster:
+  ball_diameter: 19        # Pololu 3/4 inch metal ball caster
+  position_from_rear: 35
+  # --- added 2026-11-10 ---
+  height: 23               # CONFIRM: Pololu 3/4" metal ball caster, mounting face to floor, no spacers
+  mount_hole_spacing: 24   # CONFIRM: two mounting holes, #2 / M2 screws
+  mount_hole_dia: 2.4
+  base_diameter: 28
+
+brush_roll:                # DECIDED 2026-11-10: bought 240 x 50 mm V8 direct-drive bar
+  length: 240
+  diameter: 50
+  end_bearing: {od: 16, id: 5, width: 5}   # 625ZZ
+  belt: {type: GT2, width: 6, pulley_teeth: 20}
+  housing_wall: 2.5
+  floor_gap: 3
+
+lidar:
+  model: RPLIDAR C1
+  diameter: 56
+  height: 42
+  mount_hole_pitch: 46     # PROVISIONAL, confirm against the C1 drawing
+  position_from_front: 70  # on the nose tower, centred
+
+sensors:
+  tof_count: 3             # VL53L1X behind bumper windows
+  tof_window: {width: 12, height: 8}
+  cliff_count: 4           # Sharp GP2Y0A51SK0F: nose corners and ahead of each wheel
+  cliff_body: {length: 29, width: 13, height: 12}
+  cliff_hole_spacing: 24   # CONFIRM: two M2 mounting holes along the sensor body
+  bumper_switch_count: 2   # microswitch with lever, front corners
+  bumper_travel: 8
+
+electronics:
+  pi5: {length: 85, width: 56, height_with_cooler: 26, hole_pitch_x: 58, hole_pitch_y: 49}
+  esp32_s3_devkitc: {length: 69, width: 25.4}
+  drv8871: {length: 26, width: 20}
+  ina226: {length: 25, width: 18}
+  buck_5v5a: {length: 50, width: 25, height: 16}
+  buck_5v3a: {length: 30, width: 18, height: 10}
+  battery_4s: {length: 80, width: 42, height: 40}   # PROVISIONAL for a 4S 5 Ah pack with BMS
+  charge_socket_panel_hole: 8
+  rocker_switch_cutout: {width: 19, height: 13}
+  fuse_holder: {length: 40, width: 20}
+
+fasteners:
+  screw: M3
+  insert_hole: 4.0         # for M3 heat-set inserts
+  insert_depth: 6
+  clearance_hole: 3.4
+  boss_od: 8
+  locating_pin: {diameter: 4, length: 8}
+
+masses:                    # kg, for the centre-of-mass check
+  vacuum: 1.6
+  battery_4s: 0.45
+  pi5_with_cooler: 0.08
+  motor_drive_each: 0.2
+  wheel_each: 0.08
+  lidar: 0.11
+  brush_roll: 0.15
+  brush_motor: 0.1
+  printed_chassis_total: 1.6
+
+# ---------------------------------------------------------------------------
+# Added by the CAD design pass of 2026-11-10. Every value below is a design
+# assumption until the owner confirms it; CONFIRM marks the ones that depend
+# on a bought part's drawing. Units: mm, kg.
+# ---------------------------------------------------------------------------
+
+frame:                     # robot frame used by every part module and the manifest
+  description: "X forward (nose), Y left, Z up; origin on the floor under the drive-axle midpoint"
+  max_piece: 252           # hard limit on every printed piece (bed minus 2 x printer.split_margin = 248 is also applied)
+
+body_levels:
+  ground_clearance: 23     # tray underside above the floor; equals caster.height so the caster mounts flat
+
+tray:                      # floor_tray.py
+  cross_split_x: -125      # second split plane (across the body) so each tray piece fits the bed
+  flange: {width: 8, height: 10}      # flange hanging under the floor along every split; carries the bolts and pins
+  centre_bolt_x: [45, 5, -60, -90, -150, -240]   # horizontal M3 bolts across the centreline flange (clear of the channel tube at x -45.5..-24.5, the cross flange and the caster pad)
+  centre_pin_x: [25, -20, -110, -185]            # 4 mm dowels along the centreline flange
+  cross_bolt_y: [25, 75, 125]      # bolts across the cross split, per side, mirrored
+  cross_pin_y: [50, 100]
+  rim: {height: 2, width: 3}          # raised rim at the slot edges (fills the pod clearance gap)
+  channel: {clear_width: 15, clear_height: 10, wall: 3, x: -35}   # cable tube under the slot floor, runs along Y, just behind the wheel boxes
+  channel_y_extent: 112    # tube runs from -y to +y; ends inside the pod footprints
+  pass_through: {length: 15, width: 15}     # hole from each pod floor down into the channel
+  nose_rim: {thickness: 8, height: 20, counterbore: {dia: 6.5, depth: 3.5}}   # upstanding rim at the tray front; bolts go forward into the nose's inserts, heads sunk in the rim's rear face
+  nose_bolt_y: [95, 125]   # per side, mirrored
+  nose_bolt_z: 37
+  pod_bolt_x: [43, -48, -145]      # pod hold-down bolts, per pod (vertical, inserts in the tray); clear of the standoffs, rails, pass-through, cliff sensor and Pi recess
+  pod_bolt_y: [87, 131]            # per side, mirrored; 3.3 mm from the recessed pod walls, heads beside the boards
+  boss_below: 4            # pod hold-down bosses hang this far under the 4 mm floor (6 mm insert plus 2 mm of floor left)
+  motor_well: {x_half: 22, y_inner: 84}     # cut-out under the drive motor (open to the outer edge); y_inner must stay below the motor's inner end (pod_outer + bracket + arm_gap - body_length = 86)
+  cliff_window: {length: 18, width: 9}      # see-through window under each cliff sensor, length along Y (every cliff sensor lies along Y); 2 mm wall to the M2 holes at +-cliff_hole_spacing/2
+  cliff_wheel_x: 32        # wheel cliff sensors sit in the pod front compartments (body along Y) and look down through tray windows
+  cliff_wheel_y: 114
+
+
+
+wheel_module:              # wheel_module.py (swing-arm sprung drive mount)
+  arm_length: 35           # pivot centre to axle centre, pivot ahead of the axle at axle height (trailing arm)
+  arm_beam_height: 20
+  arm_thickness: 6         # plate thickness; the 5 mm bearing sits in a pocket leaving a 1 mm lip
+  bracket_thickness: 5
+  arm_gap: 1               # bracket to arm (take up with a 1 mm M5 washer)
+  hub_gap: 2               # arm outer face to hub inner face
+  bracket_x: [-36, 50]     # plate extent along X, relative to the axle (front edge flush with the pod's front face)
+  bracket_z: [27, 92]      # plate extent along Z (absolute; bottom flush with the pod floor)
+  bracket_bolts: [[-30, 36], [-30, 86], [33, 86], [44, 72]]   # (x, z) of the four M3 bolts into pod inserts
+  pivot_bolt: {dia: 5, clearance: 5.3}      # M5 x 30 through arm bearing, bracket and pod wall, nylock inside the pod
+  spring_y_from_pod: 6.5   # spring axis outside the pod's outer face: 1.5 mm to the wall, 2.5 mm to the hub with the stack above
+  spring_post: {dia: 7, height: 10}         # peg on the arm inside the spring's bottom end
+  spring_peg: {dia: 6, height: 4}           # peg under the bracket ledge inside the spring's top end; post meets it at ~6 mm bump
+  spring_pocket: {dia: 11, depth: 4}        # LEGACY, unused by the CAD since the ledge switched to a peg; kept because checks/wall_thickness.py reads it
+  seat_gap: 20             # arm post base to bracket ledge underside at nominal ride height (spring compressed ~10 mm from a 30 mm free length)
+  ledge: {thickness: 6, min_length: 24}     # spans from the plate to the arm's outer face; the plate is notched beneath it wide enough for the spring, post and pad through the whole travel, and the ledge is 6 mm longer than the notch
+  droop_stop: {tail_length: 13}             # arm tail ahead of the pivot meets a stop block on the bracket at full droop
+  motor_boss_dia: 13       # CONFIRM: clearance for the JGB37 gearbox's front boss
+  hub: {centre_od: 20, web: 4, rim_wall: 5, bore_depth: 13, grub_boss_od: 10, d_flat_depth: 0.5}
+  tyre_key: {width: 10, depth: 2}           # rib on the tyre's bore engages a groove in the hub rim
+
+nose:                      # nose.py
+  length: 85               # rear face (tray front / duct flange) to the nose's own front face; the bumper sits ahead of it
+  height: 125              # top plate, from the floor plane
+  shell: 3
+  brush_axis_x: 108        # brush bar axis, robot frame (housing tube just inside the nose's front wall)
+  brush_clearance: 2       # radial, bar to housing, and axial at each end
+  brush_offset_y: 6        # bar shifted toward the cap side so a 15 mm pulley fits beside the drive end wall
+  end_wall: 6              # drive-end wall of the housing; carries the 625ZZ seat (bearing width + 1)
+  mouth_half_angle: 36     # suction mouth: a sector of the housing each side of straight down (radial faces, ~16 mm half width at the bar); the floor plate is cut 2.5 mm wider with vertical faces
+  tube_rib: {width: 5, height: 19}          # ribs along Y either side of the mouth tying the housing tube to the shell floor
+  plenum: {x: [61, 103], y_half: 55, z: [48, 122], wall: 2.5}   # box above the housing, fused to the rear wall and top plate; the bar cavity opens into it, a fill block behind the opening keeps the plenum floor from tapering to a knife edge against the cavity
+  duct_outlet: {diameter: 60, z: 85, bolt_pitch: 68}   # PROVISIONAL height; the vacuum's inlet decides it; 4 M3 inserts on the rear face
+  cap: {thickness: 6, bolt_circle: 62, bolt_count: 3, ear_dia: 10, first_bolt_angle: 90, opening_clearance: 0.5}   # removable bearing cap on the left end: disc = housing OD plus three ears (first at 90 deg, which checks/hole_alignment.py assumes); the bar slides out through a cap-shaped opening in the left wall, 0.5 mm larger, which stops 2.65 mm short of going through the front wall
+  brush_motor_offset_x: -32                   # motor axis behind the bar axis; z follows from the belt centre distance (keeps 8 mm from the housing tube)
+  brush_motor_mount: {hole_spacing: 17, boss_dia: 7.5}   # CONFIRM: JGA25-370 front face, 2 x M3 either side of the shaft
+  belt_length: 140         # closed GT2 belt, 70 teeth; centre distance = (length - 2*pi*pulley radius)/2 = 50 mm
+  pulley_width: 15         # space between the drive end wall and the outer shell wall; CONFIRM the pulley fits (trim the hub if 16 mm)
+  tower: {size: 70, platform_z: 140, wall: 3, cable_slot: [20, 8]}   # hollow square tower centred on lidar.position_from_front
+  lidar_hole_dia: 2.8      # CONFIRM: RPLIDAR C1 uses M2.5 screws; 4 holes on a lidar.mount_hole_pitch square assumed
+  split_rib: {width: 8, height: 12}           # ribs either side of the centreline on the top plate (inside and ahead of the tower) and on the floor behind the housing
+  split_bolts: [[65, 131], [78, 131], [128, 131]]   # (x, z) horizontal bolts through the top rib; one behind the tower, two inside it (lidar plate off to reach them)
+  split_pins: [[69, 12], [103, 131]]
+  tray_bolt_inserts: true  # nose carries the inserts and the tray rim the clearance holes, so the heads are reachable from the slot
+  guide_pin_z: 75          # bumper guide pins and springs enter the nose's front face here (above the housing tube)
+
+bumper:                    # bumper.py
+  depth: 30                # nose front face to bumper front at rest: shell 3 + travel 8 + 19 for the corner cliff pockets, ToF boards and switches
+  shell: 3
+  z: [12, 90]              # bumper shell height range
+  wrap: 25                 # return walls around the nose corners
+  guide_pin: {dia: 6, length: 54, y: 80, clearance: 6.4, sleeve_od: 12, sleeve_length: 20, stop_clearance: 1}   # z is nose.guide_pin_z; the end-stop cross hole sits stop_clearance behind the sleeve's rear face at rest
+  spring: {od: 10, free_length: 25, pocket_dia: 11, pocket_depth: 4, preload: 3}   # pocket_depth is the nose-face pocket; the bumper boss height sets the 3 mm preload at rest
+  switch_pad: {y: 108, width: 10, height: 12, z: 55, depth: 8}   # rib on the bumper's back that presses the microswitch lever (clear of the outer ToF windows and of the brush drive-end wall at y -116)
+  switch_body: {length: 20, width: 6.5, height: 10, hole_spacing: 9.5}   # KW11-style lever microswitch on the nose face, lever forward
+  tof_y: [0, 96]           # centre and mirrored
+  tof_z: 55
+  tof_hole_spacing: 15     # CONFIRM: two M2 holes on the VL53L1X breakout
+  cliff_nose_y: 118        # nose-corner cliff sensors ride in pockets under the bumper's bottom corners
+  joining_plate: {width: 60, height: 50, thickness: 3, bolt_dx: 20, bolt_dz: 18, boss_height: 7}   # bridges the two bumper halves behind the centre ToF window
+  cliff_pocket: {wall: 2, clearance: 1}      # box under each bumper corner holding a cliff sensor, open at the top
+  pin_boss: {od: 16, height: 11, pocket_depth: 2}   # ring on the bumper's back around each guide pin; its pocket is the spring's upper seat (span 22 mm at rest)
+
+fasteners_extra:
+  pin_socket_dia: 4.1      # sockets for the 4 mm locating pins; use 4 x 16 mm dowels (8 mm into each side)
+  pin_socket_depth: 8
+  m2_hole: 2.0             # self-tap holes for M2 screws (microswitches, cliff sensors)
+  m25_hole: 2.6            # self-tap holes for M2.5 screws (Pi 5, LiDAR)
+
+materials:
+  petg_density: 1.27       # g/cm3, for the mass estimate in the manifest
+
+placeholders:              # assembly.py; PROVISIONAL stand-ins for bought parts and the vacuum
+  vacuum: {length: 320, width: 130, height: 220}   # PROVISIONAL box, nose forward, front face on the duct flange
+  caster_mass: 0.015
+  esp32_mass: 0.01
+  drv8871_mass: 0.005
+  buck_mass: 0.03
+
+connector:                 # male quick-release connector into the handheld's socket (from the community
+                           # attachment models in cad/reference/, 2026-11-13; CONFIRM with the printed test piece)
+  outside_diameter: 34.8
+  bore: 30.7
+  insertion_length: 47
+  entry_ring_length: 4.75
+  side_bump: {start: 5, end: 34.5, ramp: 2.25, protrusion: 2.45}   # at 3 and 9 o'clock
+  top_rib: {start: 10, end: 43, protrusion: 2.85}                  # at 12 o'clock

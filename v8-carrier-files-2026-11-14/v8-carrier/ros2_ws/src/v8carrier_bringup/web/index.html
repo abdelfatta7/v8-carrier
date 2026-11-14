@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V8 carrier</title>
+<style>
+  :root { --bg: #f4f4f2; --fg: #1d1d1b; --card: #ffffff; --line: #d8d8d4; --ok: #2d7d46; --warn: #b45309; --bad: #b42318; --accent: #2b4c7e; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #16181a; --fg: #ecece9; --card: #22252a; --line: #3a3f46; --accent: #7aa2e3; } }
+  body { margin: 0; padding: 16px; font: 16px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+  h1 { font-size: 1.3rem; margin: 0 0 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  button { font: inherit; padding: 12px 18px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; min-width: 110px; }
+  button.primary { background: var(--accent); color: #fff; border-color: transparent; }
+  button:disabled { opacity: .5; cursor: default; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; }
+  dt { opacity: .7; }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); font-weight: 600; }
+  input[type=time] { font: inherit; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--fg); }
+  #msg { min-height: 1.4em; opacity: .8; }
+</style>
+</head>
+<body>
+<h1>V8 carrier</h1>
+
+<div class="row">
+  <button class="primary" onclick="post('start')">Start</button>
+  <button onclick="post('stop')">Stop</button>
+  <button onclick="post('go_home')">Go home</button>
+  <button id="clear" onclick="post('clear_estop')">Clear estop</button>
+</div>
+
+<div class="card">
+  <div class="row" style="margin-bottom:0; align-items:center">
+    <label for="when">Schedule daily at</label>
+    <input type="time" id="when">
+    <button onclick="schedule()">Schedule</button>
+    <button onclick="schedule(true)">Clear schedule</button>
+  </div>
+</div>
+
+<div class="card">
+  <dl>
+    <dt>Mission</dt><dd id="mission">–</dd>
+    <dt>Schedule</dt><dd id="schedule">–</dd>
+    <dt>Vacuum</dt><dd id="vacuum">–</dd>
+    <dt>Battery</dt><dd id="battery">–</dd>
+    <dt>Estop</dt><dd id="estop">–</dd>
+    <dt>Bridge</dt><dd id="link">–</dd>
+  </dl>
+</div>
+<div id="msg"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+async function post(action, body) {
+  $('msg').textContent = '';
+  try {
+    const r = await fetch('/api/' + action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+    const j = await r.json();
+    $('msg').textContent = (j.success ? 'OK: ' : 'Refused: ') + (j.message || '');
+  } catch (e) { $('msg').textContent = 'request failed: ' + e; }
+  refresh();
+}
+function schedule(clear) { post('schedule', { time: clear ? '' : $('when').value }); }
+async function refresh() {
+  try {
+    const s = await (await fetch('/api/status')).json();
+    const m = s.mission || {};
+    $('mission').textContent = (m.state || 'unknown') + (m.detail ? ' – ' + m.detail : '');
+    $('schedule').textContent = m.schedule || 'none';
+    const v = s.vacuum || {};
+    $('vacuum').textContent = v.mode ? `${v.mode} (${v.status}${v.mic_running ? ', mic hears it' : ''}, level ${v.mic_level})` : 'unknown';
+    const b = s.battery || {};
+    if (b.voltage !== undefined) {
+      $('battery').textContent = `${b.voltage.toFixed(2)} V, ${b.current.toFixed(2)} A, ${(b.percentage * 100).toFixed(0)} %`;
+      $('battery').className = b.voltage < 14.4 ? 'warn' : '';
+    }
+    const e = s.estop || {};
+    if (e.latched === undefined) { $('estop').textContent = 'unknown'; }
+    else if (e.latched) { $('estop').textContent = 'LATCHED: ' + (e.latch_causes || []).join(', ') + (e.recovery ? ` (recovery ${e.recovery})` : ''); $('estop').className = 'bad'; }
+    else { $('estop').textContent = 'clear'; $('estop').className = 'ok'; }
+    $('clear').disabled = !e.latched;
+    $('link').textContent = s.bridge_age_s === null ? 'no data' : `data ${s.bridge_age_s.toFixed(1)} s old`;
+    $('link').className = s.bridge_age_s !== null && s.bridge_age_s < 2 ? 'ok' : 'bad';
+  } catch (e) { $('link').textContent = 'status request failed'; $('link').className = 'bad'; }
+}
+refresh();
+setInterval(refresh, 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,1188 @@
+{
+  "frame": "X forward (nose), Y left, Z up; origin on the floor under the drive-axle midpoint",
+  "units": "mm, mm3, g, kg",
+  "petg_density_g_cm3": 1.27,
+  "max_piece_mm": 248,
+  "layout": {
+    "x_front": 173,
+    "x_rear": -247,
+    "nose_front": 143,
+    "nose_rear": 58,
+    "half_w": 140.0,
+    "floor_z0": 23,
+    "floor_z1": 27.0,
+    "slot_half": 75.0,
+    "pod_inner": 78.0,
+    "pod_outer": 140.0,
+    "pod_front": 50,
+    "pod_rear": -195,
+    "pod_z0": 27.0,
+    "pod_z1": 102.0,
+    "axle_z": 40.0,
+    "wheel_y": 166.5,
+    "track_width": 333.0,
+    "caster_x": -212
+  },
+  "pieces": {
+    "tray_front_left": {
+      "module": "floor_tray",
+      "bbox_mm": {
+        "min": [
+          -125.0,
+          -0.0,
+          10.0
+        ],
+        "max": [
+          58.0,
+          140.0,
+          47.0
+        ],
+        "size": [
+          183.0,
+          140.0,
+          37.0
+        ]
+      },
+      "volume_mm3": 138907.4,
+      "mass_petg_g": 176.4,
+      "position": {
+        "bbox_centre": [
+          -33.5,
+          70.0,
+          28.5
+        ],
+        "centre_of_mass": [
+          -36.54,
+          62.74,
+          23.65
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "centreline flange carries the inserts; cross-split flange carries the inserts for the rear piece; fit the two nose bolts (counterbored in the nose rim) before the pod goes on",
+      "files": [
+        "tray_front_left.stl",
+        "tray_front_left.step"
+      ]
+    },
+    "tray_rear_left": {
+      "module": "floor_tray",
+      "bbox_mm": {
+        "min": [
+          -247.0,
+          -0.0,
+          13.0
+        ],
+        "max": [
+          -125.0,
+          140.0,
+          29.0
+        ],
+        "size": [
+          122.0,
+          140.0,
+          16.0
+        ]
+      },
+      "volume_mm3": 86356.8,
+      "mass_petg_g": 109.7,
+      "position": {
+        "bbox_centre": [
+          -186.0,
+          70.0,
+          21.0
+        ],
+        "centre_of_mass": [
+          -178.4,
+          65.34,
+          23.62
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "carries one caster screw hole; bolts to tray_front_left across the cross split",
+      "files": [
+        "tray_rear_left.stl",
+        "tray_rear_left.step"
+      ]
+    },
+    "tray_front_right": {
+      "module": "floor_tray",
+      "bbox_mm": {
+        "min": [
+          -125.0,
+          -140.0,
+          10.0
+        ],
+        "max": [
+          58.0,
+          0.0,
+          47.0
+        ],
+        "size": [
+          183.0,
+          140.0,
+          37.0
+        ]
+      },
+      "volume_mm3": 138918.5,
+      "mass_petg_g": 176.4,
+      "position": {
+        "bbox_centre": [
+          -33.5,
+          -70.0,
+          28.5
+        ],
+        "centre_of_mass": [
+          -36.54,
+          -62.74,
+          23.65
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "centreline flange carries the clearance holes (bolt heads face -Y, reach them from below); fit the two nose bolts before the pod goes on",
+      "files": [
+        "tray_front_right.stl",
+        "tray_front_right.step"
+      ]
+    },
+    "tray_rear_right": {
+      "module": "floor_tray",
+      "bbox_mm": {
+        "min": [
+          -247.0,
+          -140.0,
+          13.0
+        ],
+        "max": [
+          -125.0,
+          0.0,
+          29.0
+        ],
+        "size": [
+          122.0,
+          140.0,
+          16.0
+        ]
+      },
+      "volume_mm3": 86362.3,
+      "mass_petg_g": 109.7,
+      "position": {
+        "bbox_centre": [
+          -186.0,
+          -70.0,
+          21.0
+        ],
+        "centre_of_mass": [
+          -178.4,
+          -65.34,
+          23.62
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "carries one caster screw hole; bolts to tray_front_right across the cross split",
+      "files": [
+        "tray_rear_right.stl",
+        "tray_rear_right.step"
+      ]
+    },
+    "pod_left": {
+      "module": "side_pods",
+      "bbox_mm": {
+        "min": [
+          -195.0,
+          78.0,
+          27.0
+        ],
+        "max": [
+          50.0,
+          140.0,
+          102.0
+        ],
+        "size": [
+          245.0,
+          62.0,
+          75.0
+        ]
+      },
+      "volume_mm3": 227833.1,
+      "mass_petg_g": 289.3,
+      "position": {
+        "bbox_centre": [
+          -72.5,
+          109.0,
+          64.5
+        ],
+        "centre_of_mass": [
+          -67.04,
+          108.67,
+          58.13
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "battery pod; bolts to the tray with M3 x 8 through the floor; M5 pivot nut inside the front compartment",
+      "files": [
+        "pod_left.stl",
+        "pod_left.step"
+      ]
+    },
+    "pod_right": {
+      "module": "side_pods",
+      "bbox_mm": {
+        "min": [
+          -195.0,
+          -140.0,
+          27.0
+        ],
+        "max": [
+          50.0,
+          -78.0,
+          102.0
+        ],
+        "size": [
+          245.0,
+          62.0,
+          75.0
+        ]
+      },
+      "volume_mm3": 221558.6,
+      "mass_petg_g": 281.4,
+      "position": {
+        "bbox_centre": [
+          -72.5,
+          -109.0,
+          64.5
+        ],
+        "centre_of_mass": [
+          -65.76,
+          -108.36,
+          58.27
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "electronics pod (mirror of the left layout); Pi 5 on M2.5 self-tap standoffs",
+      "files": [
+        "pod_right.stl",
+        "pod_right.step"
+      ]
+    },
+    "lid_left": {
+      "module": "side_pods",
+      "bbox_mm": {
+        "min": [
+          -195.0,
+          78.0,
+          96.0
+        ],
+        "max": [
+          50.0,
+          140.0,
+          105.0
+        ],
+        "size": [
+          245.0,
+          62.0,
+          9.0
+        ]
+      },
+      "volume_mm3": 48120.9,
+      "mass_petg_g": 61.1,
+      "position": {
+        "bbox_centre": [
+          -72.5,
+          109.0,
+          100.5
+        ],
+        "centre_of_mass": [
+          -73.99,
+          108.63,
+          103.25
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "carries the fuse holder, 5V5A buck and INA226 on insert standoffs underneath",
+      "files": [
+        "lid_left.stl",
+        "lid_left.step"
+      ]
+    },
+    "lid_right": {
+      "module": "side_pods",
+      "bbox_mm": {
+        "min": [
+          -195.0,
+          -140.0,
+          102.0
+        ],
+        "max": [
+          50.0,
+          -78.0,
+          105.0
+        ],
+        "size": [
+          245.0,
+          62.0,
+          3.0
+        ]
+      },
+      "volume_mm3": 42195.8,
+      "mass_petg_g": 53.6,
+      "position": {
+        "bbox_centre": [
+          -72.5,
+          -109.0,
+          103.5
+        ],
+        "centre_of_mass": [
+          -71.24,
+          -108.74,
+          103.5
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "vent slots over the Pi; slot over the ESP32-S3 USB end",
+      "files": [
+        "lid_right.stl",
+        "lid_right.step"
+      ]
+    },
+    "wheel_bracket_left": {
+      "module": "wheel_module",
+      "bbox_mm": {
+        "min": [
+          -36.0,
+          140.0,
+          27.0
+        ],
+        "max": [
+          50.0,
+          152.0,
+          92.0
+        ],
+        "size": [
+          86.0,
+          12.0,
+          65.0
+        ]
+      },
+      "volume_mm3": 19638.4,
+      "mass_petg_g": 24.9,
+      "position": {
+        "bbox_centre": [
+          7.0,
+          146.0,
+          59.5
+        ],
+        "centre_of_mass": [
+          10.61,
+          143.01,
+          65.18
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "4 x M3 x 10 into the pod's outer-wall inserts; M5 x 30 pivot bolt through bracket and pod wall",
+      "files": [
+        "wheel_bracket_left.stl",
+        "wheel_bracket_left.step"
+      ]
+    },
+    "wheel_bracket_right": {
+      "module": "wheel_module",
+      "bbox_mm": {
+        "min": [
+          -36.0,
+          -152.0,
+          27.0
+        ],
+        "max": [
+          50.0,
+          -140.0,
+          92.0
+        ],
+        "size": [
+          86.0,
+          12.0,
+          65.0
+        ]
+      },
+      "volume_mm3": 19638.4,
+      "mass_petg_g": 24.9,
+      "position": {
+        "bbox_centre": [
+          7.0,
+          -146.0,
+          59.5
+        ],
+        "centre_of_mass": [
+          10.61,
+          -143.01,
+          65.18
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "mirror of the left bracket",
+      "files": [
+        "wheel_bracket_right.stl",
+        "wheel_bracket_right.step"
+      ]
+    },
+    "wheel_arm_left": {
+      "module": "wheel_module",
+      "bbox_mm": {
+        "min": [
+          -21.5,
+          143.0,
+          18.5
+        ],
+        "max": [
+          48.0,
+          152.0,
+          74.0
+        ],
+        "size": [
+          69.5,
+          9.0,
+          55.5
+        ]
+      },
+      "volume_mm3": 10570.8,
+      "mass_petg_g": 13.4,
+      "position": {
+        "bbox_centre": [
+          13.25,
+          147.5,
+          46.25
+        ],
+        "centre_of_mass": [
+          7.66,
+          148.89,
+          41.53
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "press a 625ZZ into the pocket from the inner face; motor bolts from the outer face with 6 x M3 x 8",
+      "files": [
+        "wheel_arm_left.stl",
+        "wheel_arm_left.step"
+      ]
+    },
+    "wheel_arm_right": {
+      "module": "wheel_module",
+      "bbox_mm": {
+        "min": [
+          -21.5,
+          -152.0,
+          18.5
+        ],
+        "max": [
+          48.0,
+          -143.0,
+          74.0
+        ],
+        "size": [
+          69.5,
+          9.0,
+          55.5
+        ]
+      },
+      "volume_mm3": 10570.8,
+      "mass_petg_g": 13.4,
+      "position": {
+        "bbox_centre": [
+          13.25,
+          -147.5,
+          46.25
+        ],
+        "centre_of_mass": [
+          7.66,
+          -148.89,
+          41.53
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "mirror of the left arm",
+      "files": [
+        "wheel_arm_right.stl",
+        "wheel_arm_right.step"
+      ]
+    },
+    "wheel_hub": {
+      "module": "wheel_module",
+      "bbox_mm": {
+        "min": [
+          -35.0,
+          154.0,
+          5.0
+        ],
+        "max": [
+          35.0,
+          179.0,
+          75.0
+        ],
+        "size": [
+          70.0,
+          25.0,
+          70.0
+        ]
+      },
+      "volume_mm3": 37676.2,
+      "mass_petg_g": 47.8,
+      "position": {
+        "bbox_centre": [
+          0.0,
+          166.5,
+          40.0
+        ],
+        "centre_of_mass": [
+          0.06,
+          164.09,
+          40.0
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 2,
+      "notes": "print 2 (same part both sides); M3 grub screw in a heat-set insert on the D-flat; print 2: the right-hand copy is this piece mirrored across the centreline",
+      "files": [
+        "wheel_hub.stl",
+        "wheel_hub.step"
+      ]
+    },
+    "wheel_tyre": {
+      "module": "wheel_module",
+      "bbox_mm": {
+        "min": [
+          -40.0,
+          154.0,
+          0.0
+        ],
+        "max": [
+          40.0,
+          179.0,
+          80.0
+        ],
+        "size": [
+          80.0,
+          25.0,
+          80.0
+        ]
+      },
+      "volume_mm3": 33725.0,
+      "mass_petg_g": 42.8,
+      "position": {
+        "bbox_centre": [
+          0.0,
+          166.5,
+          40.0
+        ],
+        "centre_of_mass": [
+          0.0,
+          166.5,
+          40.0
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 2,
+      "notes": "print 2 in TPU; stretch over the hub, the inner rib drops into the hub groove; print 2: the right-hand copy is this piece mirrored across the centreline",
+      "files": [
+        "wheel_tyre.stl",
+        "wheel_tyre.step"
+      ]
+    },
+    "nose_left": {
+      "module": "nose",
+      "bbox_mm": {
+        "min": [
+          58.0,
+          -0.0,
+          3.0
+        ],
+        "max": [
+          143.0,
+          140.0,
+          137.0
+        ],
+        "size": [
+          85.0,
+          140.0,
+          134.0
+        ]
+      },
+      "volume_mm3": 262681.1,
+      "mass_petg_g": 333.6,
+      "position": {
+        "bbox_centre": [
+          100.5,
+          70.0,
+          70.0
+        ],
+        "centre_of_mass": [
+          100.36,
+          67.9,
+          68.69
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "carries the split inserts and the brush cap bosses; lift the lidar_plate to reach the two tower split bolts",
+      "files": [
+        "nose_left.stl",
+        "nose_left.step"
+      ]
+    },
+    "nose_right": {
+      "module": "nose",
+      "bbox_mm": {
+        "min": [
+          58.0,
+          -140.0,
+          3.0
+        ],
+        "max": [
+          143.0,
+          0.0,
+          137.0
+        ],
+        "size": [
+          85.0,
+          140.0,
+          134.0
+        ]
+      },
+      "volume_mm3": 307161.3,
+      "mass_petg_g": 390.1,
+      "position": {
+        "bbox_centre": [
+          100.5,
+          -70.0,
+          70.0
+        ],
+        "centre_of_mass": [
+          100.5,
+          -75.86,
+          65.85
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "carries the split clearance holes, the brush drive-end wall, belt bay and brush motor mount",
+      "files": [
+        "nose_right.stl",
+        "nose_right.step"
+      ]
+    },
+    "brush_cap": {
+      "module": "nose",
+      "bbox_mm": {
+        "min": [
+          76.15,
+          128.0,
+          3.0
+        ],
+        "max": [
+          139.85,
+          134.0,
+          68.5
+        ],
+        "size": [
+          63.69,
+          6.0,
+          65.5
+        ]
+      },
+      "volume_mm3": 16229.1,
+      "mass_petg_g": 20.6,
+      "position": {
+        "bbox_centre": [
+          108.0,
+          131.0,
+          35.75
+        ],
+        "centre_of_mass": [
+          108.0,
+          131.03,
+          32.5
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "press a 625ZZ into the inner face; 3 x M3 x 10 into the housing end bosses; remove to slide the bar out",
+      "files": [
+        "brush_cap.stl",
+        "brush_cap.step"
+      ]
+    },
+    "lidar_plate": {
+      "module": "nose",
+      "bbox_mm": {
+        "min": [
+          65.0,
+          -38.0,
+          137.0
+        ],
+        "max": [
+          141.0,
+          38.0,
+          140.0
+        ],
+        "size": [
+          76.0,
+          76.0,
+          3.0
+        ]
+      },
+      "volume_mm3": 16665.2,
+      "mass_petg_g": 21.2,
+      "position": {
+        "bbox_centre": [
+          103.0,
+          0.0,
+          138.5
+        ],
+        "centre_of_mass": [
+          103.55,
+          0.0,
+          138.5
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "bolts to the four tower columns (4 x M3 x 8) across the split; RPLIDAR C1 screws from below",
+      "files": [
+        "lidar_plate.stl",
+        "lidar_plate.step"
+      ]
+    },
+    "bumper_left": {
+      "module": "bumper",
+      "bbox_mm": {
+        "min": [
+          116.0,
+          0.0,
+          12.0
+        ],
+        "max": [
+          173.0,
+          144.0,
+          90.0
+        ],
+        "size": [
+          57.0,
+          144.0,
+          78.0
+        ]
+      },
+      "volume_mm3": 45743.7,
+      "mass_petg_g": 58.1,
+      "position": {
+        "bbox_centre": [
+          144.5,
+          72.0,
+          51.0
+        ],
+        "centre_of_mass": [
+          168.05,
+          83.26,
+          50.98
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "guide pin and spring at y=+80; pad presses the left microswitch; corner cliff sensor pocket",
+      "files": [
+        "bumper_left.stl",
+        "bumper_left.step"
+      ]
+    },
+    "bumper_right": {
+      "module": "bumper",
+      "bbox_mm": {
+        "min": [
+          116.0,
+          -144.0,
+          12.0
+        ],
+        "max": [
+          173.0,
+          0.0,
+          90.0
+        ],
+        "size": [
+          57.0,
+          144.0,
+          78.0
+        ]
+      },
+      "volume_mm3": 45743.7,
+      "mass_petg_g": 58.1,
+      "position": {
+        "bbox_centre": [
+          144.5,
+          -72.0,
+          51.0
+        ],
+        "centre_of_mass": [
+          168.05,
+          -83.26,
+          50.98
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "mirror geometry of the left half (built as one shell and cut)",
+      "files": [
+        "bumper_right.stl",
+        "bumper_right.step"
+      ]
+    },
+    "bumper_joining_plate": {
+      "module": "bumper",
+      "bbox_mm": {
+        "min": [
+          160.0,
+          -30.0,
+          30.0
+        ],
+        "max": [
+          163.0,
+          30.0,
+          80.0
+        ],
+        "size": [
+          3.0,
+          60.0,
+          50.0
+        ]
+      },
+      "volume_mm3": 8315.0,
+      "mass_petg_g": 10.6,
+      "position": {
+        "bbox_centre": [
+          161.5,
+          0.0,
+          55.0
+        ],
+        "centre_of_mass": [
+          161.5,
+          -0.0,
+          55.0
+        ]
+      },
+      "fits_bed": true,
+      "solids": 1,
+      "print_count": 1,
+      "notes": "4 x M3 x 8 into the bosses on the back of the halves; window for the centre ToF sensor",
+      "files": [
+        "bumper_joining_plate.stl",
+        "bumper_joining_plate.step"
+      ]
+    }
+  },
+  "placeholders": {
+    "placeholder_vacuum": {
+      "provisional": true,
+      "mass_kg": 1.6,
+      "bbox_mm": {
+        "min": [
+          -262.0,
+          -65.0,
+          27.0
+        ],
+        "max": [
+          58.0,
+          65.0,
+          247.0
+        ],
+        "size": [
+          320.0,
+          130.0,
+          220.0
+        ]
+      },
+      "centre": [
+        -102.0,
+        0.0,
+        137.0
+      ],
+      "note": "PROVISIONAL box [320, 130, 220] mm, nose forward, front face on the duct flange, on the slot floor"
+    },
+    "placeholder_drive_motor_left": {
+      "provisional": true,
+      "mass_kg": 0.2,
+      "bbox_mm": {
+        "min": [
+          -18.5,
+          86.0,
+          21.5
+        ],
+        "max": [
+          18.5,
+          146.0,
+          58.5
+        ],
+        "size": [
+          37.0,
+          60.0,
+          37.0
+        ]
+      },
+      "centre": [
+        0.0,
+        116.0,
+        40.0
+      ]
+    },
+    "placeholder_drive_motor_right": {
+      "provisional": true,
+      "mass_kg": 0.2,
+      "bbox_mm": {
+        "min": [
+          -18.5,
+          -146.0,
+          21.5
+        ],
+        "max": [
+          18.5,
+          -86.0,
+          58.5
+        ],
+        "size": [
+          37.0,
+          60.0,
+          37.0
+        ]
+      },
+      "centre": [
+        0.0,
+        -116.0,
+        40.0
+      ]
+    },
+    "placeholder_battery": {
+      "provisional": true,
+      "mass_kg": 0.45,
+      "bbox_mm": {
+        "min": [
+          -137.0,
+          87.0,
+          31.0
+        ],
+        "max": [
+          -63.0,
+          129.0,
+          71.0
+        ],
+        "size": [
+          74.0,
+          42.0,
+          40.0
+        ]
+      },
+      "centre": [
+        -100.0,
+        108.0,
+        51.0
+      ]
+    },
+    "placeholder_pi5": {
+      "provisional": true,
+      "mass_kg": 0.08,
+      "bbox_mm": {
+        "min": [
+          -149.0,
+          -136.5,
+          37.0
+        ],
+        "max": [
+          -64.0,
+          -80.5,
+          63.0
+        ],
+        "size": [
+          85.0,
+          56.0,
+          26.0
+        ]
+      },
+      "centre": [
+        -106.5,
+        -108.5,
+        50.0
+      ]
+    },
+    "placeholder_esp32": {
+      "provisional": true,
+      "mass_kg": 0.01,
+      "bbox_mm": {
+        "min": [
+          -56.9,
+          -124.0,
+          33.0
+        ],
+        "max": [
+          -31.5,
+          -122.0,
+          102.0
+        ],
+        "size": [
+          25.4,
+          2.0,
+          69.0
+        ]
+      },
+      "centre": [
+        -44.2,
+        -123.0,
+        67.5
+      ]
+    },
+    "placeholder_lidar": {
+      "provisional": true,
+      "mass_kg": 0.11,
+      "bbox_mm": {
+        "min": [
+          75.0,
+          -28.0,
+          140.0
+        ],
+        "max": [
+          131.0,
+          28.0,
+          182.0
+        ],
+        "size": [
+          56.0,
+          56.0,
+          42.0
+        ]
+      },
+      "centre": [
+        103.0,
+        0.0,
+        161.0
+      ]
+    },
+    "placeholder_brush_bar": {
+      "provisional": true,
+      "mass_kg": 0.15,
+      "bbox_mm": {
+        "min": [
+          83.0,
+          -114.0,
+          7.5
+        ],
+        "max": [
+          133.0,
+          126.0,
+          57.5
+        ],
+        "size": [
+          50.0,
+          240.0,
+          50.0
+        ]
+      },
+      "centre": [
+        108.0,
+        6.0,
+        32.5
+      ]
+    },
+    "placeholder_brush_motor": {
+      "provisional": true,
+      "mass_kg": 0.1,
+      "bbox_mm": {
+        "min": [
+          63.5,
+          -116.0,
+          58.42
+        ],
+        "max": [
+          88.5,
+          -61.0,
+          83.42
+        ],
+        "size": [
+          25.0,
+          55.0,
+          25.0
+        ]
+      },
+      "centre": [
+        76.0,
+        -88.5,
+        70.92
+      ]
+    },
+    "placeholder_caster": {
+      "provisional": true,
+      "mass_kg": 0.015,
+      "bbox_mm": {
+        "min": [
+          -226.0,
+          -14.0,
+          0.0
+        ],
+        "max": [
+          -198.0,
+          14.0,
+          23.0
+        ],
+        "size": [
+          28.0,
+          28.0,
+          23.0
+        ]
+      },
+      "centre": [
+        -212.0,
+        0.0,
+        11.5
+      ]
+    }
+  },
+  "warnings": [],
+  "summary": {
+    "printed_mass_kg": 2.408,
+    "total_mass_kg_with_placeholders": 5.323,
+    "centre_of_mass_estimate": [
+      -34.6,
+      5.3,
+      79.2
+    ],
+    "axle_x": 0.0,
+    "caster_x": -212,
+    "measurements_filled": false,
+    "failures": [],
+    "build_seconds": 4.2
+  }
+}

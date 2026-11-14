@@ -1,0 +1,42 @@
+# serial_bridge parameters. ticks_per_rev must match firmware/src/pins.h
+# (ENCODER_TICKS_PER_REV). wheel_diameter and track_width here are fallbacks:
+# bringup.launch.py loads v8carrier_description/config/geometry.yaml (generated
+# from cad/params.yaml) after this file, which overrides them.
+serial_bridge:
+  ros__parameters:
+    port: /dev/ttyAMA0
+    baud: 115200
+    ticks_per_rev: 1320
+    wheel_diameter: 0.080
+    track_width: 0.333
+    publish_tf: false          # robot_localization owns odom->base_footprint
+    odom_frame: odom
+    base_frame: base_footprint
+    imu_frame: imu_link
+    heartbeat_hz: 10.0
+    cmd_timeout: 0.5
+    slow_rate_divider: 10
+    auto_clear_heartbeat: true
+    auto_backoff: true
+    backoff_speed_mm_s: 60
+    backoff_s: 1.0
+    battery_cells: 4
+    battery_capacity_ah: 5.0
+
+scan_filter:
+  ros__parameters:
+    input_topic: scan
+    output_topic: scan_filtered
+    blank_start_deg: 130.0     # rear 100 degrees: 180 +- 50
+    blank_end_deg: 230.0
+
+battery_rules:
+  ros__parameters:
+    low_voltage_v: 14.4
+    low_hold_s: 10.0
+    low_clear_v: 14.8
+
+web_ui:
+  ros__parameters:
+    port: 8080
+    bind: 0.0.0.0

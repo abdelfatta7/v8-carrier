@@ -1,0 +1,27 @@
+# coverage and mission node parameters. brush_width / robot_radius are
+# overridden by v8carrier_description/config/geometry.yaml (generated from
+# cad/params.yaml) in coverage.launch.py.
+coverage:
+  ros__parameters:
+    map_yaml: ""               # empty: take the latched /map from map_server
+    map_topic: map
+    global_frame: map
+    base_frame: base_footprint
+    brush_width: 0.24
+    overlap: 0.02              # rows 0.22 m apart
+    use_row_spacing: false
+    row_spacing: 0.22
+    robot_radius: 0.291
+    margin: 0.03
+    min_segment: 0.30
+    row_axis: auto
+
+mission:
+  ros__parameters:
+    vacuum_mode: soft
+    brush_duty: 80
+    vacuum_start_timeout_s: 20.0
+    vacuum_stop_timeout_s: 20.0
+    global_frame: map
+    base_frame: base_footprint
+    schedule: ""               # "HH:MM" local time for a daily run; the web UI can set it too
