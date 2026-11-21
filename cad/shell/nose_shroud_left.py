@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import math
 
-from shell_common import (box, cyl_y, cyl_z, edge_on_line, extrude_outline,
+from shell_common import (box, prism_xz, cyl_y, cyl_z, edge_on_line, extrude_outline,
                           fillet_top, inner_face_offset, load_params)
 
 
@@ -55,8 +55,10 @@ def body_left(p: dict):
 
     # solid brow ahead of the LiDAR opening (the bridge to the chin)
     lo = ns["lidar_opening"]
-    brow = outer & box(ns["brow_fill_from_x"], g["x_front"] + 1, 0, lo["half_y"] + 4, ns["rest_z"], g["z_out"])
-    shell += brow
+    # solid brow strip along the whole front: from brow_fill_from_x down to the nose top level, and from
+    # the LiDAR opening's front edge above z rest + 3 (keeps 3 mm from the nose's front-top edge)
+    shell += outer & box(ns["brow_fill_from_x"], g["x_front"] + 1, 0, 300, ns["rest_z"], g["z_out"])
+    shell += outer & box(lo["x"][1], g["x_front"] + 1, 0, 300, ns["rest_z"] + c, g["z_out"])
 
     # chin block across the split
     ch = ns["split"]["chin"]
@@ -79,6 +81,17 @@ def body_left(p: dict):
     shell -= box(g["x_rear"] - 1, g["x_rear"] + t + 0.01, -10, g["y_side"] - t - 0.01, zb - 1, ns["rear_lip_bottom_z"])
     # front face stays uncovered below z 125 (radar window, bumper)
     shell -= box(ns["nose_front_x"] + c + p.get("cut_margin", 0.0), ch["x"][1] + 10, -10, 300, zb - 1, ns["front_open_below_z"])
+    # side skirt ends square at the front corner's tangent point (no thin oblique end)
+    shell -= box(g["x_front"] - ns["plan_corner_radius_front"], ch["x"][1] + 10, -10, 300,
+                 zb - 1, ns["front_open_below_z"])
+    # brow lower front edge chamfered back to the LD2410 cone (outside the chin)
+    rc = ns["radar_chamfer"]
+    tn = math.tan(math.radians(rc["angle_deg"]))
+    x0 = ns["nose_front_x"] + c + p.get("cut_margin", 0.0)
+    x1 = ch["x"][1] + 20
+    zc = lambda x: rc["top_z"] + (x - rc["face_x"]) * tn + rc["margin_z"]
+    xf0 = x0 + rc.get("flat", 0.0)        # short flat ahead of the brow's rear face (no < 50 deg wedge there)
+    shell -= prism_xz([(x0 - 0.01, zb - 1), (x0 - 0.01, zc(xf0)), (xf0, zc(xf0)), (x1, zc(x1)), (x1, zb - 1)], rc["from_y"], 300)
     # LiDAR plate / tower opening (+3 mm), run out through the rear edge
     shell -= box(g["x_rear"] - 10, lo["x"][1], -10, lo["half_y"], zb - 1, g["z_out"] + 10)
     return shell, g

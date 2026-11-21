@@ -4,17 +4,20 @@ ESP32 USB slot), vent slots over the Pi in the skin, and skirt slots facing
 the pod's outer-wall vents."""
 from __future__ import annotations
 
-from pod_cover_left import add_fixings, body_left, cut_footprints
+from build123d import Pos, Rot
+
+from pod_cover_left import add_fixings, body_left, cut_footprints, wall_point
 from shell_common import box, cyl_y, load_params, mirror_y, stadium_slot_z
 
 
-def _slot_y(x, w, y0, y1, z0, z1):
-    """Slot through a wall facing Y: width w along X, rounded at top/bottom."""
+def _slot_normal(x, y, normal_deg, w, length, z0, z1):
+    """Slot of width w through the wall at (x, y), cut along the wall's
+    outward normal (deg, about Z), rounded at top and bottom."""
     r = w / 2
-    s = box(x - r, x + r, y0, y1, z0 + r, z1 - r)
-    s += cyl_y(w, y0, y1, x, z0 + r)
-    s += cyl_y(w, y0, y1, x, z1 - r)
-    return s
+    s = box(-r, r, -length / 2, length / 2, z0 + r, z1 - r)
+    s += cyl_y(w, -length / 2, length / 2, 0, z0 + r)
+    s += cyl_y(w, -length / 2, length / 2, 0, z1 - r)
+    return Pos(x, y, 0) * Rot(0, 0, normal_deg - 90.0) * s
 
 
 def build(params: dict | None = None):
@@ -28,7 +31,13 @@ def build(params: dict | None = None):
 
     tv = side["top_vents"]
     x = tv["x"][0] + tv["width"] / 2
+    keep_off = [((x0 - cc, y0 - cc), (x1 + cc, y1 + cc)) for (x0, y0), (x1, y1) in side["cutouts"].values()
+                for cc in [p["clearance"] + p.get("cut_margin", 0.0) + tv.get("web_min", 2.0)]]
     while x <= tv["x"][1] - tv["width"] / 2 + 1e-6:
+        xa, xb = x - tv["width"] / 2, x + tv["width"] / 2
+        if any(xa < q1[0] and xb > q0[0] and tv["y"][0] < q1[1] and tv["y"][1] > q0[1] for q0, q1 in keep_off):
+            x += tv["pitch"]
+            continue                                  # would leave a thin web next to a cut-out
         shell -= stadium_slot_z(x - tv["width"] / 2, x + tv["width"] / 2, tv["y"][0], tv["y"][1],
                                 g["z_in"] - 3, g["z_out"] + 3)
         x += tv["pitch"]
@@ -36,8 +45,8 @@ def build(params: dict | None = None):
     sv = side["side_vents"]
     x = sv["x"][0] + sv["width"] / 2
     while x <= sv["x"][1] - sv["width"] / 2 + 1e-6:
-        shell -= _slot_y(x, sv["width"], -(pc["fender"]["outer_y"] + 5), -(pc["lid_outer_y"] + 1),
-                         sv["z"][0], sv["z"][1])
+        yw, nd = wall_point(p, g, x)                     # left frame
+        shell -= _slot_normal(x, -yw, -nd, sv["width"], 4 * g["t"] + 2, sv["z"][0], sv["z"][1])
         x += sv["pitch"]
     return shell
 

@@ -11,27 +11,30 @@ The parts are exported in the robot frame, as installed. Material is PETG with a
 
 | part | what it is | size (mm) | mass |
 |---|---|---|---|
-| pod_cover_left | Cover over the left pod and lid, with a fender over the top half of the left wheel. Cut-outs (+3.4 mm) for the mic post and speaker box. | 247.7 x 108 x 81 | 82 g |
-| pod_cover_right | Mirror body over the right pod and lid. Cut-outs for the stop button, the sensor post and the ESP32 USB slot. Vent slots over the Pi, and skirt slots in front of the pod's outer-wall vents. | 247.7 x 108 x 81 | 85 g |
-| nose_shroud_left / _right | Rounded cap over the nose top and its outer sides, split on the centreline. Open around the LiDAR plate (+3.5 mm). The nose front face stays uncovered below z 125 (radar window, bumper). | 110.5 x 148 x 41 each | 42 g each |
+| pod_cover_left | Cover over the left pod and lid, with a fender over the top half of the left wheel. Cut-outs (+3.4 mm) for the mic post and speaker box. | 247.7 x 108 x 81 | 83 g |
+| pod_cover_right | Mirror body over the right pod and lid. Cut-outs for the stop button, the sensor post and the ESP32 USB slot. Vent slots over the Pi, and skirt slots in front of the pod's outer-wall vents. | 247.7 x 108 x 81 | 87 g |
+| nose_shroud_left / _right | Rounded cap over the nose top and its outer sides, split on the centreline. Open around the LiDAR plate (+3.5 mm). The nose front face stays uncovered below z 125 (radar window, bumper). | 110.5 x 148 x 41 each | 41 g each |
 
 Total is about 251 g. Covers top out at z 113 (pods) and z 135 (shroud chin), well below the LiDAR scan plane at z ~174.
 
 ## Geometry rules built in
 - The pod covers float 6 mm above the lid top, on screw bosses and pads. That gap lets the 12 mm outer edge round
   clear the lid's sharp corner by 3 mm. The side and rear offsets are computed from it in `shell_common.inner_face_offset`.
+- The fender front is a flat face at x 44.5 (body built longer and trimmed, so the edge rounds run out cleanly).
+  Cut-outs that reach into the outer edge round (mic post, stop button) take the round with them down to the side wall.
 - The inner edge stays at |y| >= 78, so the handheld slot stays open. A short lip runs down to z 108.5.
 - Wheel arch: nothing within 55.5 mm of the axle (tyre 40 + 10 mm travel + 5 margin + 0.5 for tessellation), and
   nothing below the axle over the arch. The fender front wall sits only outboard of |y| 155, clear of the bracket and arm.
 - The rear wall stops at z 68, above the rocker switch and charge socket in the left pod's rear face. It sits 3.8 mm
   ahead of the servo mast. Both values are PROVISIONAL.
 - Shroud: rear edge at x 61.5 (duct riser + 3). Skirt bottom at z 94 (bumper top 90 + 3, so the bumper is never in
-  its path). Nothing ahead of x 146.4 below z 125.
+  its path). Nothing ahead of x 146.4 below z 125; skirt ends square at x 139.2. Outside the chin the brow's lower front
+  edge is cut back at 40 deg to the LD2410 cone (+1.5 mm), so the radar cone is clear.
 
 ## Fasteners
 - **Pod covers:** 4 x M3 x 10 button or socket head per cover, from above, through counterbored bosses into **free
-  inserts of the lid's existing top grid** (left: (-131,85) (-131,133) (-71,85) (29,133); right: (-111,-85)
-  (-111,-133) (-11,-85) (29,-133)). Two plain rest pads per side.
+  inserts of the lid's existing top grid** (grid x -170 + 20k; left: (-130,85) (-130,133) (-70,85) (30,133); right: (-110,-85)
+  (-110,-133) (-10,-85) (30,-133)); bosses 10 mm OD (1.75 mm wall around the 6.5 mm counterbore). Two plain rest pads per side.
   Lift the cover off to reach the lid bolts.
 - **Nose shroud:** 2 x M3 x 16 socket head along Y through the centre chin. The heads sit in the left half and go into
   2 x M3 x 5.7 heat-set inserts in the right half, with 2 x dowel pins (3 x 10 mm).

@@ -26,10 +26,9 @@ pod_cover:
   rear_skirt_bottom_z: 68.0          # PROVISIONAL: rear wall stops above the left pod's rocker switch / charge socket (z 51..61) and clear of anything rear of x -195
   skirt_bottom_z: 32.0               # side skirt and fender wall bottom (pod wall bottom is 27)
   plan_corner_radius_rear: 12        # vertical rear-outer corner (>= edge_radius); sets the side / rear offset together with the edge round. PROVISIONAL (rear of x -195)
-  plan_corner_radius_front: 18       # vertical front-outer corner of the fender
+  plan_corner_radius_front: 18       # unused since the fender front is a flat face (body is built longer and trimmed at front_x)
   fender:
     outer_y: 186.0                   # outer face of the fender
-    front_corner_kink_factor: 1.3    # front corner arc radius / plan_corner_radius_front (13 deg kink at the front edge)
     full_width_rear_x: -60.0         # fender is full width from front_x back to here
     taper_radius: 45.0               # S-curve (two tangent arcs) from the fender back to the pod side
     front_wall_min_y: 155.0          # fender front wall only outboard of the wheel bracket / arm (|y| <= 152) + 3
@@ -39,23 +38,23 @@ pod_cover:
     arch_radius: 55.5                # tyre r 40 + 10 travel + 5 margin (55) + 0.5 for STL tessellation
     region_y: [140.0, 200.0]
   boss:
-    od: 8.0
+    od: 10.0                         # 1.75 mm wall around the 6.5 mm counterbore
     hole: 3.4                        # M3 clearance; screw goes into the lid's existing insert grid
     cbore_d: 6.5
     cbore_depth: 2.5                 # head seat at z ~110.5; M3 x 10 gives ~4.5 mm into the lid insert (insert bore depth 6)
     screw: "M3 x 10 socket or button head, ISO 7380 / 4762"
   rest_pad_od: 8.0                   # plain pads (no screw) where no free grid insert is available
   left:
-    # free positions of the lid_left M3 insert grid (x -171 + 20k, y 85 / 133), clear of mic post and speaker box
-    screws: [[-131, 85], [-131, 133], [-71, 85], [29, 133]]
+    # free positions of the lid_left M3 insert grid (x -170 + 20k, y 85 / 133), clear of mic post and speaker box
+    screws: [[-130, 85], [-130, 133], [-70, 85], [30, 133]]   # lid insert grid x -170 + 20k, y 85 / 133
     rest_pads: [[-189, 109], [40, 109]]
     # through-lid parts, footprint at the lid (z 105..120) from the reference meshes; cut-out = footprint + clearance
     cutouts:
       mic_post:    [[-178, 79], [-142, 139]]
       speaker_box: [[-56, 79], [16, 139]]
-    speaker_front_notch: false       # true: also open the skin from the speaker box forward (grille bottom is z ~113.8, skin top is 113.0)
+    speaker_front_notch: false       # true: also open the skin from the speaker box forward (grille openings are at z 117.1..146.1 on the 15 deg face, skin top is 113.0)
   right:
-    screws: [[-111, -85], [-111, -133], [-11, -85], [29, -133]]
+    screws: [[-110, -85], [-110, -133], [-10, -85], [30, -133]]
     rest_pads: [[-190, -109], [11, -109]]
     cutouts:
       stop_button: [[-182, -139], [-138, -79]]
@@ -66,7 +65,8 @@ pod_cover:
       y: [-127, -103]
       width: 3.0
       pitch: 6.0
-    side_vents:                      # skirt slots facing the pod's outer-wall vents (x -141..-65, z 57..86)
+      web_min: 2.0                   # slots closer than this to a cut-out are skipped
+    side_vents:                      # skirt slots facing the pod's outer-wall vents (x -141..-65, z 57..86); each slot is cut normal to the local skirt (S-curve), so no slivers
       x: [-141, -65]
       z: [57, 88]
       width: 3.0
@@ -84,13 +84,20 @@ nose_shroud:
   rear_lip_bottom_z: 128.0
   skirt_bottom_z: 94.0               # bumper top is z 90 (+3), so the skirt never meets the bumper even when it is pushed back 8 mm
   front_open_below_z: 125.0          # nothing over the nose front face below z 125 (radar window at x 139..141, z 97..119)
+  radar_chamfer:                     # brow lower front edge cut back to the LD2410 cone's upper face (+ margin), outside the chin
+    face_x: 141.0                    # LD2410 board face
+    top_z: 119.0                     # board top edge
+    angle_deg: 40.0                  # cone half-angle; the chamfer face is 40 deg from horizontal
+    margin_z: 1.5                    # vertical margin above the cone face (1.15 mm normal)
+    from_y: 14.0                     # |y| from the chin edge outward (chin |y| <= 14 is outside the cone in Y)
+    flat: 1.2                        # horizontal flat before the 40 deg face starts
   plan_corner_radius_front: 12      # over the nose front corner; sets the side / front offset
   lidar_opening: {x: [62.0, 144.5], half_y: 41.5}   # lidar plate x 65..141, |y| <= 38, + 3
-  brow_fill_from_x: 146.5            # brow ahead of the lidar opening is filled solid (it is the only bridge across the split)
+  brow_fill_from_x: 146.4            # brow ahead of the lidar opening is filled solid (it is the only bridge across the split)
   rest_pads: {od: 10.0, xy: [[72, 95], [132, 95], [102, 62]]}   # left frame; on the nose top at z 125 (fix with VHB tape)
   side_pads: {x: [72, 126], length: 10.0, z: [100, 120], interference: 0.0}   # ribs that bear on the nose side (y 140)
   split:
-    chin: {x: [146.5, 172.0], half_y: 14.0, z: [125.0, 135.0], corner_radius: 5.0}
+    chin: {x: [146.4, 172.0], half_y: 14.0, z: [125.0, 135.0], corner_radius: 5.0}
     axis_z: 130.0
     bolts_x: [151.5, 167.0]          # 2 x M3 x 16 along Y, heads in the left half, heat-set inserts in the right half
     pins_x: [156.5, 162.0]           # 2 x 3 mm dowel pins x 10

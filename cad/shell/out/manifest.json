@@ -3,7 +3,7 @@
   "reference": "reference/model_2026-11-16.json",
   "bed_limit_mm": 248,
   "density_g_cm3": 1.27,
-  "total_mass_g": 250.6,
+  "total_mass_g": 251.2,
   "parts": [
     {
       "name": "pod_cover_left",
@@ -24,8 +24,8 @@
         108.0,
         81.0
       ],
-      "volume_cm3": 64.58,
-      "mass_g": 82.0,
+      "volume_cm3": 64.97,
+      "mass_g": 82.5,
       "material": "PETG",
       "solids": 1,
       "fits_bed": true,
@@ -50,8 +50,8 @@
         108.0,
         81.0
       ],
-      "volume_cm3": 66.7,
-      "mass_g": 84.7,
+      "volume_cm3": 68.2,
+      "mass_g": 86.6,
       "material": "PETG",
       "solids": 1,
       "fits_bed": true,
@@ -76,8 +76,8 @@
         148.24,
         41.0
       ],
-      "volume_cm3": 32.9,
-      "mass_g": 41.8,
+      "volume_cm3": 32.2,
+      "mass_g": 40.9,
       "material": "PETG",
       "solids": 1,
       "fits_bed": true,
@@ -102,8 +102,8 @@
         148.24,
         41.0
       ],
-      "volume_cm3": 33.11,
-      "mass_g": 42.1,
+      "volume_cm3": 32.41,
+      "mass_g": 41.2,
       "material": "PETG",
       "solids": 1,
       "fits_bed": true,

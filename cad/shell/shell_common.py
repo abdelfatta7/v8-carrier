@@ -40,6 +40,15 @@ def cyl_y(d, y0, y1, x, z) -> Part:
     return Pos(x, (y0 + y1) / 2, z) * Rot(90, 0, 0) * Cylinder(d / 2, y1 - y0)
 
 
+def prism_xz(pts, y0, y1) -> Part:
+    """Prism from a polygon given as (x, z) points, spanning y0..y1."""
+    from build123d import Polygon
+    face = Plane.XZ * Polygon(*pts, align=None)
+    solid = extrude(face, amount=y1 - y0, dir=(0, 1, 0))
+    bb = solid.bounding_box()
+    return Pos(0, y0 - bb.min.Y, 0) * solid
+
+
 def round_rect_z(x0, x1, y0, y1, z0, z1, r) -> Part:
     """Vertical prism with rounded plan corners (cut-outs)."""
     b = box(x0, x1, y0, y1, z0, z1)

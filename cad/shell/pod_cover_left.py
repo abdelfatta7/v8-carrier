@@ -29,22 +29,19 @@ def geometry(p: dict) -> dict:
                 y_fender=pc["fender"]["outer_y"])
 
 
-def outline(p: dict, g: dict, d: float):
-    """Closed plan outline, offset inward by d (arc centres fixed)."""
+def outline(p: dict, g: dict, d: float, x_end: float):
+    """Closed plan outline, offset inward by d (arc centres fixed).  The
+    front is a square end at x_end, placed well ahead of the real front so
+    the edge rounds run out cleanly; the body is trimmed to front_x later."""
     pc = p["pod_cover"]
     fe = pc["fender"]
-    xf, xr, yin = g["x_front"], g["x_rear"], g["y_in"]
+    xr, yin = g["x_rear"], g["y_in"]
     Ys, Yf = g["y_side"], g["y_fender"]
-    Rf, Rr, Rt = pc["plan_corner_radius_front"], pc["plan_corner_radius_rear"], fe["taper_radius"]
+    Rr, Rt = pc["plan_corner_radius_rear"], fe["taper_radius"]
     xt0 = fe["full_width_rear_x"]
     th = math.acos(1 - (Yf - Ys) / (2 * Rt))
     C1 = (xt0, Yf - Rt)
     C2 = (xt0 - 2 * Rt * math.sin(th), Ys + Rt)
-    # front-outer corner: tangent to the fender side, but meets the front edge
-    # with a small kink so the edge round does not run on along the front
-    # edge (which sits over the lid and must stay sharp)
-    rho = Rf * pc["fender"].get("front_corner_kink_factor", 1.3)
-    Cf = (xf - math.sqrt(rho ** 2 - (rho - Rf) ** 2), Yf - rho)
     Cr = (xr + Rr, Ys - Rr)
     assert C2[0] > Cr[0] + 1, "taper runs into the rear corner"
 
@@ -53,10 +50,8 @@ def outline(p: dict, g: dict, d: float):
 
     thd = math.degrees(th)
     P0 = (xr + d, yin + d)
-    P1 = (xf - d, yin + d)
-    P2 = (xf - d, Cf[1] + math.sqrt((rho - d) ** 2 - (xf - d - Cf[0]) ** 2))
-    a2 = math.degrees(math.atan2(P2[1] - Cf[1], P2[0] - Cf[0]))
-    P3 = pt(Cf, rho - d, 90)
+    P1 = (x_end, yin + d)
+    P3 = (x_end, Yf - d)
     P4 = (xt0, Yf - d)
     P5 = pt(C1, Rt - d, 90 + thd)
     P6 = pt(C2, Rt + d, -90)
@@ -64,8 +59,7 @@ def outline(p: dict, g: dict, d: float):
     P8 = pt(Cr, Rr - d, 180)
     return [
         ("L", P0, P1),
-        ("L", P1, P2),
-        ("A", P2, pt(Cf, rho - d, (a2 + 90) / 2), P3),
+        ("L", P1, P3),
         ("L", P3, P4),
         ("A", P4, pt(C1, Rt - d, 90 + thd / 2), P5),
         ("A", P5, pt(C2, Rt + d, -90 + thd / 2), P6),
@@ -82,11 +76,15 @@ def body_left(p: dict):
     t, R = g["t"], g["R"]
     zb = pc["skirt_bottom_z"]
 
-    outer = extrude_outline(outline(p, g, 0.0), zb, g["z_out"])
-    outer = fillet_top(outer, R, lambda e: edge_on_line(e, "y", g["y_in"]) or edge_on_line(e, "x", g["x_front"]))
-    inner = extrude_outline(outline(p, g, t), zb - 1, g["z_in"])
-    inner = fillet_top(inner, R - t, lambda e: edge_on_line(e, "y", g["y_in"] + t) or edge_on_line(e, "x", g["x_front"] - t))
+    xe = g["x_front"] + 25.0
+    outer = extrude_outline(outline(p, g, 0.0, xe), zb, g["z_out"])
+    outer = fillet_top(outer, R, lambda e: edge_on_line(e, "y", g["y_in"]) or edge_on_line(e, "x", xe))
+    inner = extrude_outline(outline(p, g, t, xe + 5), zb - 1, g["z_in"])
+    inner = fillet_top(inner, R - t, lambda e: edge_on_line(e, "y", g["y_in"] + t) or edge_on_line(e, "x", xe + 5))
     shell = outer - inner
+    # trim to the real front; the fender keeps a flat front wall outboard of the wheel bracket / arm
+    shell -= box(g["x_front"], xe + 10, g["y_in"] - 10, 300, zb - 5, g["z_out"] + 5)
+    shell += outer & box(g["x_front"] - t, g["x_front"], pc["fender"]["front_wall_min_y"], 300, zb - 1, g["z_out"] + 1)
 
     big = 400
     # open inner edge below the short lip
@@ -94,13 +92,40 @@ def body_left(p: dict):
     # open front over the lid / pod / wheel bracket; fender front wall stays outboard of front_wall_min_y
     shell -= box(g["x_front"] - t - 0.01, g["x_front"] + 5, g["y_in"] - 5, pc["fender"]["front_wall_min_y"], zb - 1, g["z_in"])
     # rear wall stops above the rear-face switch / socket
-    shell -= box(g["x_rear"] - 5, pc["lid_rear_x"] - 1.5, g["y_in"] - 5, big, zb - 1, pc["rear_skirt_bottom_z"])
+    # (ends at the rear corner's tangent point so the skirt end is square, not a thin oblique cut)
+    shell -= box(g["x_rear"] - 5, g["x_rear"] + pc["plan_corner_radius_rear"], g["y_in"] - 5, big, zb - 1, pc["rear_skirt_bottom_z"])
     # wheel arch: nothing within arch_radius of the axle, nothing below the axle over the arch
     w = pc["wheel"]
     y0, y1 = w["region_y"]
     shell -= cyl_y(2 * w["arch_radius"], y0, y1, w["axle_x"], w["axle_z"])
     shell -= box(w["axle_x"] - w["arch_radius"], g["x_front"] + 5, y0, y1, zb - 1, w["axle_z"])
+    # fender front wall: flat bottom just above the arch, so the arch does not leave a knife edge on it
+    xw = g["x_front"] - t
+    zf = w["axle_z"] + math.sqrt(max(w["arch_radius"] ** 2 - (xw - w["axle_x"]) ** 2, 0.0)) + 0.5
+    xw -= 0.01
+    shell -= box(xw, g["x_front"] + 5, y0, y1, zb - 1, zf)
     return shell, g
+
+
+def wall_point(p: dict, g: dict, x: float):
+    """Outer skirt point (left frame) at x, and the outward normal angle (deg)
+    of the skirt there (straight side, S-curve or fender side)."""
+    pc = p["pod_cover"]
+    fe = pc["fender"]
+    Ys, Yf, Rt, xt0 = g["y_side"], g["y_fender"], fe["taper_radius"], fe["full_width_rear_x"]
+    th = math.acos(1 - (Yf - Ys) / (2 * Rt))
+    c1x, c1y = xt0, Yf - Rt
+    c2x, c2y = xt0 - 2 * Rt * math.sin(th), Ys + Rt
+    xj = xt0 - Rt * math.sin(th)
+    if x >= xt0:
+        return Yf, 90.0
+    if x >= xj:
+        a = math.acos((x - c1x) / Rt)
+        return c1y + Rt * math.sin(a), math.degrees(a)
+    if x >= c2x:
+        a = -math.acos((x - c2x) / Rt)
+        return c2y + Rt * math.sin(a), math.degrees(a) + 180.0
+    return Ys, 90.0
 
 
 def add_fixings(shell, p: dict, g: dict, screws, pads):
@@ -125,6 +150,15 @@ def cut_footprints(shell, p: dict, g: dict, cutouts: dict, notch_front_of=None):
         if notch_front_of == name:
             xb = g["x_front"] + 5
         shell -= round_rect_z(xa, xb, y0 - c, y1 + c, pc["rest_z"] + 0.5, g["z_out"] + 5, 3.0)
+        # a cut-out that reaches into the outer edge round takes the round with it down to the
+        # straight side wall (square 2 mm ends instead of a thin curved strip)
+        ys = g["y_side"] - g["R"]
+        # (only along the straight pod side; over the fender the skin is flat there)
+        straight = wall_point(p, g, xb)[0] <= g["y_side"] + 1e-6
+        if straight and y1 > 0 and y1 + c > ys:
+            shell -= box(xa, xb, y1 + c - 1, g["y_side"] + 1, g["z_out"] - g["R"], g["z_out"] + 5)
+        if straight and y0 < 0 and -y0 + c > ys:
+            shell -= box(xa, xb, -(g["y_side"] + 1), y0 - c + 1, g["z_out"] - g["R"], g["z_out"] + 5)
     return shell
 
 

@@ -13,28 +13,28 @@ Covers: cad/shell/out/*.stl (as installed). Reference: reference/model_2026-11-1
 | 2 clearance pod_cover_right | PASS | min 3.328 mm to lid_right | no volume overlap; fixing contacts: lid_right 0.00 |
 | 2 clearance nose_shroud_left | PASS | min 3.000 mm to nose_left | no volume overlap; fixing contacts: nose_left 0.00 |
 | 2 clearance nose_shroud_right | PASS | min 3.000 mm to nose_right | no volume overlap; fixing contacts: nose_right 0.00 |
-| 3 wheel +10 mm pod_cover_left | PASS | tyre 7.47 mm (hub 11.65) | closest at cover (5.2, 184.0, 95.2) |
-| 3 axle-line distance pod_cover_left | PASS | 55.46 mm | \|y\| 140..190; at (-16.0, 184.6, 93.1); needs >= 53 (tyre r 40 + 10 travel + 3) |
-| 3 wheel +10 mm pod_cover_right | PASS | tyre 7.47 mm (hub 11.65) | closest at cover (5.2, -184.0, 95.2) |
-| 3 axle-line distance pod_cover_right | PASS | 55.46 mm | \|y\| 140..190; at (-47.3, -185.5, 68.9); needs >= 53 (tyre r 40 + 10 travel + 3) |
+| 3 wheel +10 mm pod_cover_left | PASS | tyre 7.46 mm (hub 11.64) | closest at cover (5.3, 184.0, 95.2) |
+| 3 axle-line distance pod_cover_left | PASS | 55.46 mm | \|y\| 140..190; at (-3.0, 185.8, 95.4); needs >= 53 (tyre r 40 + 10 travel + 3) |
+| 3 wheel +10 mm pod_cover_right | PASS | tyre 7.46 mm (hub 11.64) | closest at cover (5.3, -184.0, 95.2) |
+| 3 axle-line distance pod_cover_right | PASS | 55.46 mm | \|y\| 140..190; at (24.9, -185.5, 89.6); needs >= 53 (tyre r 40 + 10 travel + 3) |
 | 4 vacuum lift-out box pod_cover_left | PASS | 0 pts inside; min gap 3.00 mm | \|y\|<75, x -362..58, z>27 |
 | 4 vacuum lift-out box pod_cover_right | PASS | 0 pts inside; min gap 3.00 mm | \|y\|<75, x -362..58, z>27 |
 | 4 vacuum lift-out box nose_shroud_left | PASS | 0 pts inside; min gap 3.50 mm | \|y\|<75, x -362..58, z>27 |
 | 4 vacuum lift-out box nose_shroud_right | PASS | 0 pts inside; min gap 3.50 mm | \|y\|<75, x -362..58, z>27 |
-| 5 bumper -8 mm X nose_shroud_left | PASS | 4.00 mm to bumper_left | at cover (145.9, 143.7, 94.0) |
-| 5 bumper -8 mm X nose_shroud_right | PASS | 4.00 mm to bumper_right | at cover (146.4, -143.2, 94.0) |
+| 5 bumper -8 mm X nose_shroud_left | PASS | 4.65 mm to bumper_left | at cover (139.2, 146.2, 94.0) |
+| 5 bumper -8 mm X nose_shroud_right | PASS | 4.65 mm to bumper_right | at cover (139.2, -146.2, 94.0) |
 | 6a LiDAR | PASS | max z 135.0; 41.50 mm from axis (r 31.0) | footprint centre (103.0, 0.0); scan plane ~166 |
-| 6b LD2410 radar cone | FAIL | min margin -1.54 mm (nose_shroud_right) | frustum from the board face x 141, y -63..-47, z 97..119, 40 deg; closest (150.5, -57.4, 125.0) |
+| 6b LD2410 radar cone | PASS | min margin 1.15 mm (nose_shroud_right) | frustum from the board face x 141, y -63..-47, z 97..119, 40 deg; closest (147.6, -62.1, 126.0) |
 | 6c bumper ToF cones | PASS | no cover ahead of x 173 | apex x 173, z 55, y 0/+-96, 13.5 deg, 300 mm; cover max x 172.0 |
 | 6d speaker grille line of sight | PASS | 0/3826 rays blocked; min clearance 8.31 mm | grille openings z 117.1..146.1 on the 15 deg front face; 30 mm rays +X 15 deg up |
 | 6e camera view | PASS | min angular margin 25.7 deg | centre (-72.5, -92.6, 217.9), 40 deg up, 92 x 66 deg, 380 mm |
 | 6f mic | PASS | 0 pts; cover max z 135.0 vs mic top 257.0 |  |
-| 7 fasteners into lid insert grid | FAIL | 8/8 screws off the grid (offset 1.00 mm) | grid exists in the 16 Nov lid meshes (x -170+20k, y +-85/+-133); cover params assume x -171+20k |
-| 8 caster share (limit 35 %) | PASS | 33.02 % -> 32.18 % | CoM (-70.0, 2.6, 88.1) -> (-68.2, 2.5, 88.7), mass 6.717 -> 6.968 kg |
-| 9 printability pod_cover_left | NOTE | overhang >50 deg 133 cm^2; knife edges (<50 deg wedge) 32 mm; walls <1.6 mm away from edges 7/2359 samples | upright as installed: needs support under roof; fixing/rest faces on support: 2.7 cm^2 |
-| 9 printability pod_cover_right | NOTE | overhang >50 deg 155 cm^2; knife edges (<50 deg wedge) 182 mm; walls <1.6 mm away from edges 20/2216 samples | upright as installed: needs support under roof; fixing/rest faces on support: 2.7 cm^2 |
-| 9 printability nose_shroud_left | NOTE | overhang >50 deg 96 cm^2; knife edges (<50 deg wedge) 33 mm; walls <1.6 mm away from edges 18/2333 samples | upright as installed: needs support under roof; fixing/rest faces on support: 3.6 cm^2 |
-| 9 printability nose_shroud_right | NOTE | overhang >50 deg 96 cm^2; knife edges (<50 deg wedge) 33 mm; walls <1.6 mm away from edges 18/2335 samples | upright as installed: needs support under roof; fixing/rest faces on support: 3.6 cm^2 |
+| 7 fasteners into lid insert grid | PASS | 0/8 screws off the grid (offset 0.00 mm) | grid exists in the 16 Nov lid meshes (x -170+20k, y +-85/+-133); cover params assume x -171+20k |
+| 8 caster share (limit 35 %) | PASS | 33.02 % -> 32.16 % | CoM (-70.0, 2.6, 88.1) -> (-68.2, 2.5, 88.7), mass 6.717 -> 6.968 kg |
+| 9 printability pod_cover_left | NOTE | overhang >50 deg 135 cm^2; knife edges (<50 deg wedge) 9 mm; walls <1.6 mm away from edges 0/2362 samples | upright as installed: needs support under roof; fixing/rest faces on support: 3.8 cm^2 |
+| 9 printability pod_cover_right | NOTE | overhang >50 deg 161 cm^2; knife edges (<50 deg wedge) 9 mm; walls <1.6 mm away from edges 2/2247 samples | upright as installed: needs support under roof; fixing/rest faces on support: 3.8 cm^2 |
+| 9 printability nose_shroud_left | NOTE | overhang >50 deg 95 cm^2; knife edges (<50 deg wedge) 3 mm; walls <1.6 mm away from edges 12/2317 samples | upright as installed: needs support under roof; fixing/rest faces on support: 3.6 cm^2 |
+| 9 printability nose_shroud_right | NOTE | overhang >50 deg 95 cm^2; knife edges (<50 deg wedge) 3 mm; walls <1.6 mm away from edges 11/2332 samples | upright as installed: needs support under roof; fixing/rest faces on support: 3.6 cm^2 |
 
 ## 2. Clearance, 5 closest pairs per cover
 
@@ -46,65 +46,65 @@ Method: dense surface sampling (150000 random samples + all vertices per cover, 
 | # | reference mesh | distance mm | cover point | ref point |
 |---|---|---|---|---|
 | 1 | lid_left | 3.33 | (-196.8, 141.8, 107.1) | (-195.0, 140.0, 105.0) |
-| 2 | mic_post | 3.40 | (-167.5, 142.4, 108.9) | (-167.5, 139.0, 108.9) |
-| 3 | speaker_box | 3.40 | (19.4, 79.1, 108.8) | (16.0, 79.1, 108.8) |
+| 2 | mic_post | 3.40 | (-181.4, 80.0, 108.5) | (-178.0, 80.0, 108.5) |
+| 3 | speaker_box | 3.40 | (19.4, 80.0, 108.5) | (16.0, 80.0, 108.5) |
 | 4 | pod_left | 4.57 | (-198.2, 143.2, 102.8) | (-195.0, 140.0, 102.0) |
-| 5 | tray_rear_left | 6.89 | (-196.5, 144.7, 32.0) | (-196.5, 140.0, 27.0) |
+| 5 | tray_rear_left | 7.99 | (-191.2, 146.2, 32.0) | (-191.2, 140.0, 27.0) |
 
-Fixing-feature contacts: lid_left 0.00 mm (overlap 0.00) at (-132.0, 83.6, 105.0)
+Fixing-feature contacts: lid_left 0.00 mm (overlap 0.00) at (-186.7, 112.3, 105.0)
 
 **pod_cover_right** (excluding fixing features vs lid_left, lid_right, pod_left, pod_right)
 
 | # | reference mesh | distance mm | cover point | ref point |
 |---|---|---|---|---|
 | 1 | lid_right | 3.33 | (-196.8, -141.8, 107.1) | (-195.0, -140.0, 105.0) |
-| 2 | stop_button_cup | 3.40 | (-162.6, -142.4, 109.8) | (-162.6, -139.0, 109.8) |
-| 3 | sensor_post | 3.40 | (-89.5, -107.4, 111.2) | (-89.5, -104.0, 111.2) |
+| 2 | stop_button_cup | 3.40 | (-134.6, -85.2, 113.0) | (-138.0, -85.2, 113.0) |
+| 3 | sensor_post | 3.40 | (-67.6, -107.4, 111.9) | (-67.6, -104.0, 111.9) |
 | 4 | pod_right | 4.57 | (-198.2, -143.2, 102.8) | (-195.0, -140.0, 102.0) |
-| 5 | tray_rear_right | 6.89 | (-196.5, -144.7, 32.0) | (-196.5, -140.0, 27.0) |
+| 5 | tray_rear_right | 7.99 | (-191.2, -146.2, 32.0) | (-191.2, -140.0, 27.0) |
 
-Fixing-feature contacts: lid_right 0.00 mm (overlap 0.00) at (31.7, -131.4, 105.0)
+Fixing-feature contacts: lid_right 0.00 mm (overlap 0.00) at (-110.4, -130.8, 105.0)
 
 **nose_shroud_left** (excluding fixing features vs nose_left, nose_right)
 
 | # | reference mesh | distance mm | cover point | ref point |
 |---|---|---|---|---|
-| 1 | nose_left | 3.00 | (62.1, 105.3, 128.0) | (62.1, 105.3, 125.0) |
-| 2 | nose_right | 3.50 | (146.5, 0.0, 125.0) | (143.0, 0.0, 125.0) |
-| 3 | duct_riser_left | 3.50 | (61.5, 44.2, 130.5) | (58.0, 44.2, 130.5) |
-| 4 | bumper_left | 4.31 | (146.4, 143.2, 94.0) | (148.0, 143.2, 90.0) |
-| 5 | lidar_plate | 5.32 | (139.2, 41.5, 133.0) | (139.2, 38.0, 137.0) |
+| 1 | nose_left | 3.00 | (63.1, 96.2, 128.0) | (63.1, 96.2, 125.0) |
+| 2 | nose_right | 3.35 | (144.5, 0.0, 128.0) | (143.0, 0.0, 125.0) |
+| 3 | duct_riser_left | 3.50 | (61.5, 44.9, 131.5) | (58.0, 44.9, 131.5) |
+| 4 | lidar_plate | 5.32 | (139.2, 41.5, 133.0) | (139.2, 38.0, 137.0) |
+| 5 | bumper_left | 9.89 | (139.2, 146.2, 94.0) | (148.0, 144.0, 90.0) |
 
-Fixing-feature contacts: nose_left 0.00 mm (overlap 0.00) at (70.8, 97.6, 125.0)
+Fixing-feature contacts: nose_left 0.00 mm (overlap 0.00) at (74.4, 140.0, 119.6)
 
 **nose_shroud_right** (excluding fixing features vs nose_left, nose_right)
 
 | # | reference mesh | distance mm | cover point | ref point |
 |---|---|---|---|---|
-| 1 | nose_right | 3.00 | (63.0, -44.1, 128.0) | (63.0, -44.1, 125.0) |
-| 2 | nose_left | 3.50 | (146.5, 0.0, 125.0) | (143.0, 0.0, 125.0) |
-| 3 | duct_riser_right | 3.50 | (61.5, -43.3, 129.1) | (58.0, -43.3, 129.1) |
-| 4 | bumper_right | 4.31 | (146.4, -143.2, 94.0) | (148.0, -143.2, 90.0) |
-| 5 | lidar_plate | 5.32 | (65.0, -41.5, 133.0) | (65.0, -38.0, 137.0) |
+| 1 | nose_right | 3.00 | (61.8, -106.6, 128.0) | (61.8, -106.6, 125.0) |
+| 2 | nose_left | 3.35 | (144.5, 0.0, 128.0) | (143.0, 0.0, 125.0) |
+| 3 | duct_riser_right | 3.50 | (61.5, -43.6, 128.7) | (58.0, -43.6, 128.7) |
+| 4 | lidar_plate | 5.32 | (65.0, -41.5, 133.0) | (65.0, -38.0, 137.0) |
+| 5 | placeholder_ld2410 | 9.12 | (146.4, -47.0, 126.0) | (140.6, -47.0, 119.0) |
 
-Fixing-feature contacts: nose_right 0.00 mm (overlap 0.00) at (130.5, -92.2, 125.0)
+Fixing-feature contacts: nose_right 0.00 mm (overlap 0.00) at (122.7, -140.0, 112.9)
 
 ## 6b. LD2410 cone
 
-Worst cover point (150.5, -57.4, 125.0) (nose_shroud_right): the cone's upper face is at z 127.01 there, so the cover is 2.01 mm inside vertically (1.54 mm normal to the cone face). Cover front x max over |y| 20..100: 150.55.
+Worst cover point (147.6, -62.1, 126.0) (nose_shroud_right): the cone's upper face is at z 124.54 there, so the cover is -1.50 mm inside vertically (-1.15 mm normal to the cone face). Cover front x max over |y| 20..100: 149.33.
 
 ## 7. Fasteners
 
     lid_left: 20 insert bores (dia 4.0) at x [-170, -150, -130, -110, -90, -70, -50, -30, -10, 10, 30], y [85, 133]; bore floor z 99.0; 6 M3 clearance holes (lid hold-down) at (-188.0, 85.0), (-188.0, 133.0), (-28.5, 133.0), (28.5, 85.0), (43.0, 85.0), (43.0, 133.0)
-      cover screw (-131, 85) -> nearest insert (-130.0, 85.0), offset 1.00 mm -> MISALIGNED
-      cover screw (-131, 133) -> nearest insert (-130.0, 133.0), offset 1.00 mm -> MISALIGNED
-      cover screw (-71, 85) -> nearest insert (-70.0, 85.0), offset 1.00 mm -> MISALIGNED
-      cover screw (29, 133) -> nearest insert (30.0, 133.0), offset 1.00 mm -> MISALIGNED
+      cover screw (-130, 85) -> nearest insert (-130.0, 85.0), offset 0.00 mm -> OK
+      cover screw (-130, 133) -> nearest insert (-130.0, 133.0), offset 0.00 mm -> OK
+      cover screw (-70, 85) -> nearest insert (-70.0, 85.0), offset 0.00 mm -> OK
+      cover screw (30, 133) -> nearest insert (30.0, 133.0), offset 0.00 mm -> OK
     lid_right: 20 insert bores (dia 4.0) at x [-170, -150, -130, -110, -90, -70, -50, -30, -10, 10, 30], y [-133, -85]; bore floor z 99.0; 6 M3 clearance holes (lid hold-down) at (-188.0, -133.0), (-188.0, -85.0), (-28.5, -133.0), (28.5, -85.0), (43.0, -133.0), (43.0, -85.0)
-      cover screw (-111, -85) -> nearest insert (-110.0, -85.0), offset 1.00 mm -> MISALIGNED
-      cover screw (-111, -133) -> nearest insert (-110.0, -133.0), offset 1.00 mm -> MISALIGNED
-      cover screw (-11, -85) -> nearest insert (-10.0, -85.0), offset 1.00 mm -> MISALIGNED
-      cover screw (29, -133) -> nearest insert (30.0, -133.0), offset 1.00 mm -> MISALIGNED
+      cover screw (-110, -85) -> nearest insert (-110.0, -85.0), offset 0.00 mm -> OK
+      cover screw (-110, -133) -> nearest insert (-110.0, -133.0), offset 0.00 mm -> OK
+      cover screw (-10, -85) -> nearest insert (-10.0, -85.0), offset 0.00 mm -> OK
+      cover screw (30, -133) -> nearest insert (30.0, -133.0), offset 0.00 mm -> OK
 
 14 Nov side_pods.py: _lid() is a plain box (lid_thickness 3) with only the hold-down clearance holes (_lid_bolt_xy, 6 per lid); no top insert grid
 
@@ -112,14 +112,14 @@ Lid notes (16 Nov): lid_left: carries the fuse holder, 5V5A buck and INA226 on i
 
 ## 8. Centre of mass
 
-- pod_cover_left: 82.0 g (STL volume gives 82.0 g) at (-92.4, 143.4, 92.9)
-- pod_cover_right: 84.7 g (STL volume gives 84.7 g) at (-80.2, -140.8, 94.9)
-- nose_shroud_left: 41.8 g (STL volume gives 41.8 g) at (110.1, 97.4, 125.9)
-- nose_shroud_right: 42.1 g (STL volume gives 42.0 g) at (110.5, -96.8, 125.9)
+- pod_cover_left: 82.5 g (STL volume gives 82.5 g) at (-88.4, 143.6, 93.3)
+- pod_cover_right: 86.6 g (STL volume gives 86.6 g) at (-76.3, -140.8, 95.4)
+- nose_shroud_left: 40.9 g (STL volume gives 40.9 g) at (109.4, 96.8, 126.1)
+- nose_shroud_right: 41.2 g (STL volume gives 41.2 g) at (109.7, -96.3, 126.2)
 
 ## 9. Printability samples (stated orientation: upright as installed)
 
-- **pod_cover_left**: downward faces >50 deg from vertical 133 cm^2 (rest/fixing faces among them 2.7 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 7/2359 below 1.6 mm (min 0.74); e.g. (-67.0, 85.2, 110.8) 0.74, (-196.5, 145.5, 50.7) 1.41, (-167.4, 142.4, 110.3) 1.42, (-128.6, 136.2, 110.6) 0.74. Knife edges (convex wedge < 50 deg) 32 mm in total, largest clusters: 18 mm in (43.2, 161.5, 73.2)..(44.5, 172.0, 74.9); 9 mm in (43.5, 149.0, 111.0)..(43.5, 149.0, 111.0); 3 mm in (42.1, 173.0, 75.5)..(42.7, 174.1, 76.1); 2 mm in (-200.6, 79.0, 108.5)..(-200.6, 79.0, 108.5)
-- **pod_cover_right**: downward faces >50 deg from vertical 155 cm^2 (rest/fixing faces among them 2.7 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 20/2216 below 1.6 mm (min 0.03); e.g. (-195.9, -145.1, 56.4) 1.18, (-92.0, -172.3, 62.6) 0.31, (44.5, -158.5, 74.5) 1.00, (-109.7, -152.6, 67.1) 0.50. Knife edges (convex wedge < 50 deg) 182 mm in total, largest clusters: 56 mm in (-92.0, -172.7, 72.5)..(-89.0, -172.6, 72.5); 28 mm in (-99.0, -164.1, 72.5)..(-99.0, -164.1, 72.5); 28 mm in (-103.0, -157.3, 72.5)..(-103.0, -157.3, 72.5); 28 mm in (-96.0, -164.6, 72.5)..(-96.0, -164.6, 72.5); 18 mm in (43.2, -172.0, 73.2)..(44.5, -161.5, 74.9); 9 mm in (43.5, -149.0, 111.0)..(43.5, -149.0, 111.0)
-- **nose_shroud_left**: downward faces >50 deg from vertical 96 cm^2 (rest/fixing faces among them 3.6 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 18/2333 below 1.6 mm (min 0.09); e.g. (150.4, 109.8, 125.4) 1.13, (149.9, 30.6, 125.0) 1.50, (150.4, 15.9, 125.3) 0.85, (150.2, 72.9, 125.0) 0.94. Knife edges (convex wedge < 50 deg) 33 mm in total, largest clusters: 27 mm in (146.4, 143.2, 107.5)..(146.4, 143.2, 107.5); 3 mm in (146.4, 142.5, 121.2)..(146.4, 143.2, 124.0); 2 mm in (62.5, 146.2, 127.6)..(62.5, 146.2, 127.6); 1 mm in (146.4, 142.1, 124.4)..(146.4, 142.3, 124.8); 0 mm in (170.1, 12.9, 130.0)..(170.1, 12.9, 130.0)
-- **nose_shroud_right**: downward faces >50 deg from vertical 96 cm^2 (rest/fixing faces among them 3.6 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 18/2335 below 1.6 mm (min 0.13); e.g. (149.9, -97.3, 125.0) 1.43, (145.7, -143.9, 117.3) 1.15, (150.4, -103.8, 125.4) 1.13, (150.4, -53.2, 125.0) 0.30. Knife edges (convex wedge < 50 deg) 33 mm in total, largest clusters: 27 mm in (146.4, -143.2, 107.5)..(146.4, -143.2, 107.5); 3 mm in (146.4, -143.2, 121.2)..(146.4, -142.5, 124.0); 2 mm in (62.5, -146.2, 127.6)..(62.5, -146.2, 127.6); 1 mm in (146.4, -142.3, 124.4)..(146.4, -142.1, 124.8)
+- **pod_cover_left**: downward faces >50 deg from vertical 135 cm^2 (rest/fixing faces among them 3.8 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 0/2362 below 1.6 mm (min 1.97). Knife edges (convex wedge < 50 deg) 9 mm in total, largest clusters: 2 mm in (-180.6, 141.4, 110.7)..(-180.6, 141.4, 110.7); 2 mm in (-139.4, 141.4, 110.7)..(-139.4, 141.4, 110.7); 2 mm in (-200.6, 79.0, 108.5)..(-200.6, 79.0, 108.5); 2 mm in (42.5, 185.0, 75.7)..(42.5, 185.0, 75.7)
+- **pod_cover_right**: downward faces >50 deg from vertical 161 cm^2 (rest/fixing faces among them 3.8 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 2/2247 below 1.6 mm (min 0.23); e.g. (-123.6, -147.2, 64.7) 0.50, (-68.0, -185.3, 72.3) 0.23. Knife edges (convex wedge < 50 deg) 9 mm in total, largest clusters: 2 mm in (-184.6, -141.4, 110.7)..(-184.6, -141.4, 110.7); 2 mm in (-135.4, -141.4, 110.7)..(-135.4, -141.4, 110.7); 2 mm in (-200.6, -79.0, 108.5)..(-200.6, -79.0, 108.5); 2 mm in (42.5, -185.0, 75.7)..(42.5, -185.0, 75.7)
+- **nose_shroud_left**: downward faces >50 deg from vertical 95 cm^2 (rest/fixing faces among them 3.6 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 12/2317 below 1.6 mm (min 0.49); e.g. (146.4, 64.0, 126.3) 1.54, (144.5, 28.4, 131.5) 0.50, (144.7, 21.4, 131.7) 0.49, (146.4, 86.8, 126.4) 1.57. Knife edges (convex wedge < 50 deg) 3 mm in total, largest clusters: 2 mm in (62.5, 146.2, 127.6)..(62.5, 146.2, 127.6); 1 mm in (146.4, 141.2, 125.2)..(146.4, 141.8, 125.9); 0 mm in (170.1, 12.9, 130.0)..(170.1, 12.9, 130.0)
+- **nose_shroud_right**: downward faces >50 deg from vertical 95 cm^2 (rest/fixing faces among them 3.6 cm^2, so the contact faces print on support). Wall samples >1 mm from sharp edges: 11/2332 below 1.6 mm (min 0.17); e.g. (145.3, -3.4, 131.3) 1.57, (146.4, -111.8, 126.1) 1.28, (144.6, -21.4, 131.7) 0.17, (164.9, -5.1, 129.9) 1.38. Knife edges (convex wedge < 50 deg) 3 mm in total, largest clusters: 2 mm in (62.5, -146.2, 127.6)..(62.5, -146.2, 127.6); 1 mm in (146.4, -141.8, 125.2)..(146.4, -141.2, 125.9)
