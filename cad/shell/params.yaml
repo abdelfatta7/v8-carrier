@@ -1,0 +1,104 @@
+# Cuby exterior shell: bolt-on covers over the 16 Nov assembly
+# (reference/model_2026-11-16.json).  Robot frame, mm: X forward, Y left,
+# Z up, origin on the floor under the drive-axle midpoint.
+# Nothing inside the robot changes: the covers sit on the lid tops / nose
+# top and use the lids' existing M3 insert grid.
+#
+# PROVISIONAL = depends on the open body-length question (420 vs 522 mm).
+
+material: {name: PETG, density_g_cm3: 1.27}
+bed: {size: 256, margin: 4}          # usable 248 x 248 x 248
+clearance: 3.0                       # every cover keeps this from every reference mesh except its rest surface
+cut_margin: 0.4                      # added to clearance-sized cut-outs / openings so tessellated STLs still read >= 3.0
+
+# ---------------------------------------------------------------------------
+pod_cover:
+  wall: 2.0
+  edge_radius: 12                    # outer top edge round (inner face gets edge_radius - wall); 12 is the largest that keeps the rear wall 3 mm off the servo mast within the 248 mm bed length
+  rest_z: 105.0                      # lid top surface (reference: lid z 96..105)
+  skin_gap: 6.0                      # lid top -> skin underside.  3 mm clearance + 3 mm so the edge round clears the lid's sharp outer corner
+  lid_outer_y: 140.0                 # lid / pod outer face |y|
+  lid_rear_x: -195.0
+  inner_y: 78.0                      # inner edge of the skin, |y| (slot |y| < 75 stays open)
+  inner_lip_bottom_z: 108.5          # short down-turned lip on the inner edge (3 mm above the lid)
+  front_x: 44.5                      # skin front edge (lid ends at 50, nose rear face at 58); total length is held <= 248 for the bed
+  # rear end: the edge round + plan corner push the rear wall to x ~ -203.2 (computed from the lid corner; servo mast is at -207)
+  rear_skirt_bottom_z: 68.0          # PROVISIONAL: rear wall stops above the left pod's rocker switch / charge socket (z 51..61) and clear of anything rear of x -195
+  skirt_bottom_z: 32.0               # side skirt and fender wall bottom (pod wall bottom is 27)
+  plan_corner_radius_rear: 12        # vertical rear-outer corner (>= edge_radius); sets the side / rear offset together with the edge round. PROVISIONAL (rear of x -195)
+  plan_corner_radius_front: 18       # vertical front-outer corner of the fender
+  fender:
+    outer_y: 186.0                   # outer face of the fender
+    front_corner_kink_factor: 1.3    # front corner arc radius / plan_corner_radius_front (13 deg kink at the front edge)
+    full_width_rear_x: -60.0         # fender is full width from front_x back to here
+    taper_radius: 45.0               # S-curve (two tangent arcs) from the fender back to the pod side
+    front_wall_min_y: 155.0          # fender front wall only outboard of the wheel bracket / arm (|y| <= 152) + 3
+  wheel:
+    axle_x: 0.0
+    axle_z: 40.0
+    arch_radius: 55.5                # tyre r 40 + 10 travel + 5 margin (55) + 0.5 for STL tessellation
+    region_y: [140.0, 200.0]
+  boss:
+    od: 8.0
+    hole: 3.4                        # M3 clearance; screw goes into the lid's existing insert grid
+    cbore_d: 6.5
+    cbore_depth: 2.5                 # head seat at z ~110.5; M3 x 10 gives ~4.5 mm into the lid insert (insert bore depth 6)
+    screw: "M3 x 10 socket or button head, ISO 7380 / 4762"
+  rest_pad_od: 8.0                   # plain pads (no screw) where no free grid insert is available
+  left:
+    # free positions of the lid_left M3 insert grid (x -171 + 20k, y 85 / 133), clear of mic post and speaker box
+    screws: [[-131, 85], [-131, 133], [-71, 85], [29, 133]]
+    rest_pads: [[-189, 109], [40, 109]]
+    # through-lid parts, footprint at the lid (z 105..120) from the reference meshes; cut-out = footprint + clearance
+    cutouts:
+      mic_post:    [[-178, 79], [-142, 139]]
+      speaker_box: [[-56, 79], [16, 139]]
+    speaker_front_notch: false       # true: also open the skin from the speaker box forward (grille bottom is z ~113.8, skin top is 113.0)
+  right:
+    screws: [[-111, -85], [-111, -133], [-11, -85], [29, -133]]
+    rest_pads: [[-190, -109], [11, -109]]
+    cutouts:
+      stop_button: [[-182, -139], [-138, -79]]
+      sensor_post: [[-98, -104], [-62, -80]]   # post base at the lid; camera carrier is at z >= 195
+      esp32_usb_slot: [[-57, -126], [-33, -120]] # keep the lid's USB slot open
+    top_vents:                       # over the Pi 5 and the lid vent slots (lid slots x -141..-65, y -124..-106)
+      x: [-141, -65]
+      y: [-127, -103]
+      width: 3.0
+      pitch: 6.0
+    side_vents:                      # skirt slots facing the pod's outer-wall vents (x -141..-65, z 57..86)
+      x: [-141, -65]
+      z: [57, 88]
+      width: 3.0
+      pitch: 7.0
+
+# ---------------------------------------------------------------------------
+nose_shroud:
+  wall: 2.0
+  edge_radius: 12
+  rest_z: 125.0                      # nose top surface
+  skin_gap: 6.0                      # skin underside at z 131, top at 133 (< 135)
+  nose_outer_y: 140.0
+  nose_front_x: 143.0
+  rear_x: 61.5                       # nose rear face is 58; duct riser (x <= 58, |y| <= 46) + 3
+  rear_lip_bottom_z: 128.0
+  skirt_bottom_z: 94.0               # bumper top is z 90 (+3), so the skirt never meets the bumper even when it is pushed back 8 mm
+  front_open_below_z: 125.0          # nothing over the nose front face below z 125 (radar window at x 139..141, z 97..119)
+  plan_corner_radius_front: 12      # over the nose front corner; sets the side / front offset
+  lidar_opening: {x: [62.0, 144.5], half_y: 41.5}   # lidar plate x 65..141, |y| <= 38, + 3
+  brow_fill_from_x: 146.5            # brow ahead of the lidar opening is filled solid (it is the only bridge across the split)
+  rest_pads: {od: 10.0, xy: [[72, 95], [132, 95], [102, 62]]}   # left frame; on the nose top at z 125 (fix with VHB tape)
+  side_pads: {x: [72, 126], length: 10.0, z: [100, 120], interference: 0.0}   # ribs that bear on the nose side (y 140)
+  split:
+    chin: {x: [146.5, 172.0], half_y: 14.0, z: [125.0, 135.0], corner_radius: 5.0}
+    axis_z: 130.0
+    bolts_x: [151.5, 167.0]          # 2 x M3 x 16 along Y, heads in the left half, heat-set inserts in the right half
+    pins_x: [156.5, 162.0]           # 2 x 3 mm dowel pins x 10
+    bolt_hole: 3.4
+    head_pocket: {d: 6.2, depth: 5.0}
+    insert_hole: {d: 4.2, depth: 9.0}   # M3 x 5.7 heat-set insert
+    pin_hole: {d: 3.05, depth: 5.5}
+
+# ---------------------------------------------------------------------------
+limits:
+  max_z: 135.0                       # LiDAR scan plane ~174 stays clear

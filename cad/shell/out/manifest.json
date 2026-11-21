@@ -1,0 +1,113 @@
+{
+  "frame": "robot frame (mm), X forward, Y left, Z up; parts exported as installed",
+  "reference": "reference/model_2026-11-16.json",
+  "bed_limit_mm": 248,
+  "density_g_cm3": 1.27,
+  "total_mass_g": 250.6,
+  "parts": [
+    {
+      "name": "pod_cover_left",
+      "bbox": [
+        [
+          -203.24,
+          78.0,
+          32.0
+        ],
+        [
+          44.5,
+          186.0,
+          113.0
+        ]
+      ],
+      "size": [
+        247.74,
+        108.0,
+        81.0
+      ],
+      "volume_cm3": 64.58,
+      "mass_g": 82.0,
+      "material": "PETG",
+      "solids": 1,
+      "fits_bed": true,
+      "notes": "left pod cover + wheel fender; rests on lid_left top on 4 screw bosses + 2 pads; 4 x M3 x 10 from above into free lid-grid inserts; cut-outs: mic post, speaker box (+3 mm)"
+    },
+    {
+      "name": "pod_cover_right",
+      "bbox": [
+        [
+          -203.24,
+          -186.0,
+          32.0
+        ],
+        [
+          44.5,
+          -78.0,
+          113.0
+        ]
+      ],
+      "size": [
+        247.74,
+        108.0,
+        81.0
+      ],
+      "volume_cm3": 66.7,
+      "mass_g": 84.7,
+      "material": "PETG",
+      "solids": 1,
+      "fits_bed": true,
+      "notes": "right pod cover + wheel fender (mirror of left body); 4 x M3 x 10 into free lid-grid inserts + 2 pads; cut-outs: stop button, sensor post, ESP32 USB slot; vent slots over the Pi and in the skirt over the pod wall vents"
+    },
+    {
+      "name": "nose_shroud_left",
+      "bbox": [
+        [
+          61.5,
+          -0.0,
+          94.0
+        ],
+        [
+          172.0,
+          148.24,
+          135.0
+        ]
+      ],
+      "size": [
+        110.5,
+        148.24,
+        41.0
+      ],
+      "volume_cm3": 32.9,
+      "mass_g": 41.8,
+      "material": "PETG",
+      "solids": 1,
+      "fits_bed": true,
+      "notes": "left half of the nose shroud; rests on the nose top (3 pads, VHB tape) and bears on the nose side (2 ribs); 2 x M3 x 16 heads + 2 x 3 mm pins at the centre chin; LiDAR opening +3 mm; front face open below z 125"
+    },
+    {
+      "name": "nose_shroud_right",
+      "bbox": [
+        [
+          61.5,
+          -148.24,
+          94.0
+        ],
+        [
+          172.0,
+          0.0,
+          135.0
+        ]
+      ],
+      "size": [
+        110.5,
+        148.24,
+        41.0
+      ],
+      "volume_cm3": 33.11,
+      "mass_g": 42.1,
+      "material": "PETG",
+      "solids": 1,
+      "fits_bed": true,
+      "notes": "right half of the nose shroud (mirror); 2 x M3 x 5.7 heat-set inserts from the split face + 2 pin holes at the chin; keep the LD2410 window (front face, z < 125) uncovered"
+    }
+  ]
+}
