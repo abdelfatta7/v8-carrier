@@ -40,10 +40,11 @@ manual (V8 Carrier).
   cancellation and noise suppression, XVF3800 class.
 - Speaker: decided in kind, not bought: MAX98357A I2S amplifier with a 3 W
   speaker, or a small USB speaker.
-- Where the microphone sits relative to the vacuum: planned at the robot's
-  highest point, facing up, at least 10 cm from the speaker, away from the
-  wheel motors and the vacuum exhaust. Exact distance from the Dyson motor
-  open until the CAD is done.
+- Where the microphone sits relative to the vacuum: on the right pod top, as
+  in the owner's concept design (rule of 21 Nov: stay with the concept; any
+  change needs his agreement). At least 10 cm from the speaker. It does not
+  need to be the highest point, because the service does not listen while
+  the vacuum runs.
 - `input_device` / `output_device` from `robot-voice devices`: not yet.
 
 ## Network
